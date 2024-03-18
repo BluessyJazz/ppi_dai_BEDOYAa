@@ -1,5 +1,3 @@
-App para manejo de ingresos, gastos, presupuesto e inversiones.
-
 # FinTrack
 
 ¡Bienvenido a FinTrack, tu compañero financiero personal! FinTrack es una aplicación diseñada para simplificar la gestión de tus finanzas personales y ayudarte a tomar decisiones informadas sobre tus inversiones. Con FinTrack, podrás organizar tus ingresos y gastos mensuales, crear un presupuesto personalizado y realizar un seguimiento de tus inversiones, todo en un solo lugar.
