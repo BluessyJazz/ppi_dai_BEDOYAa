@@ -30,7 +30,7 @@ Con FinTrack, puedes crear un presupuesto personalizado que se adapte a tus nece
 
 ### Toma Decisiones de Inversión Informadas
 
-¿Interesado en invertir en el mercado financiero? FinTrack te ofrece sugerencias de inversión personalizadas basadas en tu perfil de riesgo y tus objetivos financieros. Con nuestra plataforma, podrás explorar diferentes opciones de inversión, realizar un seguimiento del rendimiento de tu cartera y tomar decisiones informadas para maximizar tus ganancias.
+¿Interesado en invertir en el mercado financiero? FinTrack te ofrece sugerencias de inversión personalizadas basadas en tu perfil de riesgo y tus objetivos financieros. Con nuestra plataforma, podrás explorar diferentes opciones de inversión, realizar un seguimiento del rendimiento de tu cartera y tomar decisiones informadas para maximizar tus ganancias teniendo un seguimiento de tuy portafolio.
 
 ## Tecnologías Utilizadas
 
@@ -44,8 +44,12 @@ FinTrack utiliza una combinación de poderosas bibliotecas de Python para ofrece
 
 ## Acerca del Autor
 
-¡Hola! Soy Anderson Bedoya, estudiante de la Universidad Nacional de Colombia en Medellín, apasionado por las finanzas y la tecnología. Con FinTrack, espero ayudarte a alcanzar la libertad financiera y a tomar el control de tus finanzas personales. ¡Gracias por usar FinTrack! Si tienes alguna pregunta o sugerencia, no dudes en ponerte en contacto conmigo.
+## Acerca del Autor
 
-¡Espero que disfrutes usando FinTrack tanto como yo disfruté creándolo!
+¡Hola! Soy Anderson Bedoya, un estudiante aficionado de las finanzas y la tecnología en la Universidad Nacional de Colombia en Medellín. Con FinTrack, espero ayudarte a estar un poco más cerca de la libertad financiera y a tomar el control de tus finanzas personales. 
+
+¡Gracias por tu interés en FinTrack! Si tienes alguna pregunta, sugerencia o te gustaría colaborar en este proyecto en desarrollo, no dudes en contactarme a través de mi correo electrónico [abedoyaci@unal.edu.co](mailto:abedoyaci@unal.edu.co) o visitar mi perfil en [LinkedIn](https://www.linkedin.com/in/anderson-bedoya-ciro-9abb1724a).
+
+
 
 
