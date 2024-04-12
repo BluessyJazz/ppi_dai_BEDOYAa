@@ -27,9 +27,9 @@ def author_info():
     """
     st.sidebar.title("Sobre el Autor")
     st.sidebar.markdown("""
-    **Anderson Bedoya Ciro**
-    **Correo Electrónico:** abedoyaci@unal.edu.co
-    
+    **Anderson Bedoya Ciro**<br>
+    abedoyaci@unal.edu.co
+
     Soy un entusiasta programación y las motocicletas. Esta aplicación es un proyecto
     personal que combina estas dos pasiones. Si tienes alguna pregunta o sugerencia, no dudes
     en ponerte en contacto conmigo.
