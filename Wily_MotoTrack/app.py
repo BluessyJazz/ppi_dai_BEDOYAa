@@ -6,7 +6,7 @@ def main_page():
     """
     Renderiza la página principal de la aplicación.
     """
-    st.title("Bienvenido a la App para Motociclistas")
+    st.title("Bienvenido a Wily MotoTrack")
 
 
 def login_page():
@@ -18,7 +18,10 @@ def login_page():
         password = st.text_input("Contraseña", type="password")
         submitted = st.form_submit_button("Iniciar Sesión")
         if submitted:
-            st.success("Inicio de sesión exitoso (simulado)")
+            if username == "admin" and password == "password":
+                st.success("Inicio de sesión exitoso")
+            else:
+                st.error("Credenciales inválidas")
 
 
 def main():
@@ -27,7 +30,7 @@ def main():
     """
     # Página de navegación
     st.sidebar.title("Navegación")
-    page = st.sidebar.radio("Ir a", ["Página Principal", "Iniciar Sesión"])
+    page = st.sidebar.selectbox("Ir a", ["Página Principal", "Iniciar Sesión"])
 
     if page == "Página Principal":
         main_page()
