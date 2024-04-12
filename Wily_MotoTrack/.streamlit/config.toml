@@ -1,5 +1,29 @@
-# .streamlit/config.toml
 [theme]
-base = "dark"
-primaryColor = "#5d0aff"
-font = "monospace"
+# Configuración de colores
+backgroundColor = "#1c1c1c"
+secondaryBackgroundColor = "#2c2c2c"
+textColor = "#ffffff"
+font = "Arial"
+
+[theme.light]
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f8f8f8"
+textColor = "#000000"
+
+[theme.dark]
+backgroundColor = "#1c1c1c"
+secondaryBackgroundColor = "#2c2c2c"
+textColor = "#ffffff"
+
+# Configuración de fuentes
+font = "Arial"
+codeFont = "monospace"
+
+# Configuración de la barra lateral
+sidebarBackgroundColor = "#111111"
+sidebarTextColor = "#ffffff"
+sidebarBorderColor = "#333333"
+
+# Configuración de la barra de título
+headerBackgroundColor = "#111111"
+headerTextColor = "#ffffff"
