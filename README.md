@@ -42,8 +42,6 @@ FinTrack utiliza una combinación de poderosas bibliotecas de Python para ofrece
 
 ## Acerca del Autor
 
-## Acerca del Autor
-
 ¡Hola! Soy Anderson Bedoya, un estudiante aficionado de las finanzas y la tecnología en la Universidad Nacional de Colombia en Medellín. Con FinTrack, espero ayudarte a estar un poco más cerca de la libertad financiera y a tomar el control de tus finanzas personales. 
 
 ¡Gracias por tu interés en FinTrack! Si tienes alguna pregunta, sugerencia o te gustaría colaborar en este proyecto en desarrollo, no dudes en contactarme a través de mi correo electrónico [abedoyaci@unal.edu.co](mailto:abedoyaci@unal.edu.co) o visitar mi perfil en [LinkedIn](https://www.linkedin.com/in/anderson-bedoya-ciro-9abb1724a).
