@@ -68,7 +68,7 @@ def author_info():
     **Anderson Bedoya Ciro**
     abedoyaci@unal.edu.co
 
-    Soy un entusiasta programación y las motocicletas. Esta aplicación
+    Soy un entusiasta de la programación y las motocicletas. Esta aplicación
     es un proyecto personal que combina estas dos pasiones. Si tienes alguna
     pregunta o sugerencia, no dudes en ponerte en contacto conmigo.
     """)
