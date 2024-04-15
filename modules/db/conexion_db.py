@@ -34,9 +34,8 @@ def insertar_usuario(nombre, correo_electronico, contrasena):
     conn.query(
         """
         INSERT INTO usuarios (nombre, correo_electronico, contrasena)
-        VALUES (%s, %s, %s)
-        """,
-        (nombre, correo_electronico, contrasena)
+        VALUES ('{}', '{}', '{}')
+        """.format(nombre, correo_electronico, contrasena)
     )
 
     conn.commit()
