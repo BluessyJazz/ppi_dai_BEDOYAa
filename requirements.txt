@@ -30,6 +30,7 @@ numpy==1.26.4
 pandas==2.2.2
 pillow==10.3.0
 protobuf==4.25.3
+psycopg2-binary==2.9.9
 pyarrow==15.0.2
 pydeck==0.8.1b0
 pyparsing==3.1.2
