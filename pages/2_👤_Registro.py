@@ -4,7 +4,7 @@ Este módulo contiene la implementación de la página de registro de usuarios
 """
 
 import streamlit as st
-from modules.db.conexion_db import insertar_usuario
+# from modules.db.conexion_db import insertar_usuario
 
 st.set_page_config(page_title="Iniciar Sesión", page_icon="👤")
 
