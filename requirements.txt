@@ -33,6 +33,7 @@ protobuf==4.25.3
 psycopg2-binary==2.9.9
 pyarrow==15.0.2
 pydeck==0.8.1b0
+PyMySQL==1.1.0
 pyparsing==3.1.2
 pyproj==3.6.1
 python-dateutil==2.9.0.post0
@@ -50,7 +51,7 @@ streamlit==1.33.0
 tenacity==8.2.3
 toml==0.10.2
 toolz==0.12.1
-tornado==6.3.3
+tornado=6.3.3
 typing_extensions==4.11.0
 tzdata==2024.1
 urllib3==2.2.1
