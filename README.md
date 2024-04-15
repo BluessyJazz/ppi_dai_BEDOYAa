@@ -1,51 +1,55 @@
-# FinTrack
+# Wily MotoTrack
 
-¡Bienvenido a FinTrack, tu compañero financiero personal! FinTrack es una aplicación diseñada para simplificar la gestión de tus finanzas personales y ayudarte a tomar decisiones informadas sobre tus inversiones. Con FinTrack, podrás organizar tus ingresos y gastos mensuales, crear un presupuesto personalizado y realizar un seguimiento de tus inversiones, todo en un solo lugar.
+¡Bienvenido a Wily MotoTrack, tu herramienta para el manejo financiero relacionado con motocicletas! Wily MotoTrack es una aplicación diseñada para ayudar a los motociclistas a registrar y analizar sus gastos e ingresos, facilitando una gestión financiera efectiva y decisiones informadas.
 
 ## Tabla de Contenidos
 
 - [Sobre el Proyecto](#sobre-el-proyecto)
-- [¿Por qué FinTrack?](#por-qué-fintrack)
-  - [Organiza tus Finanzas](#organiza-tus-finanzas)
-  - [Crea un Presupuesto Personalizado](#crea-un-presupuesto-personalizado)
-  - [Toma Decisiones de Inversión Informadas](#toma-decisiones-de-inversión-informadas)
+- [¿Por qué Wily MotoTrack?](#por-qué-wily-mototrack)
+  - [Registro de Gastos](#registro-de-gastos)
+  - [Registro de Ingresos](#registro-de-ingresos)
+  - [Análisis de Datos](#análisis-de-datos)
 - [Tecnologías Utilizadas](#tecnologías-utilizadas)
+- [Demostración](#demostración)
+- [Contribuir al Proyecto](#contribuir-al-proyecto)
 - [Acerca del Autor](#acerca-del-autor)
 
 ## Sobre el Proyecto
 
-En FinTrack, nos comprometemos a proporcionar una solución integral para administrar tus finanzas personales y tus inversiones. Nuestra aplicación está diseñada pensando en ti, para que puedas alcanzar tus metas financieras con confianza y tranquilidad.
+Wily MotoTrack es una aplicación que permite a los motociclistas llevar un control detallado de sus finanzas personales relacionadas con la motocicleta. Con esta herramienta, puedes registrar y visualizar tanto gastos como ingresos, y analizar tu situación financiera de manera más clara y eficiente.
 
-## ¿Por qué FinTrack?
+## ¿Por qué Wily MotoTrack?
 
-### Organiza tus Finanzas
+### Registro de Gastos
 
-Mantén un registro claro y ordenado de tus ingresos y gastos mensuales con FinTrack. Con nuestras herramientas intuitivas, podrás categorizar tus transacciones, establecer presupuestos y realizar un seguimiento de tus gastos de manera eficiente.
+Mantén un registro detallado de tus gastos relacionados con tu motocicleta. Desde mantenimiento hasta combustible, todo en un solo lugar para una mejor gestión.
 
-### Crea un Presupuesto Personalizado
+### Registro de Ingresos
 
-Con FinTrack, puedes crear un presupuesto personalizado que se adapte a tus necesidades financieras y metas individuales. Nuestra aplicación te permite establecer objetivos financieros realistas y monitorear tu progreso a lo largo del tiempo para mantenerte en el buen camino hacia el éxito financiero.
+Registra cualquier ingreso que generes gracias a tu motocicleta, ya sea por servicios de transporte, entregas o cualquier otra actividad relacionada.
 
-### Toma Decisiones de Inversión Informadas
+### Análisis de Datos
 
-¿Interesado en invertir en el mercado financiero? FinTrack te ofrece sugerencias de inversión personalizadas basadas en tu perfil de riesgo y tus objetivos financieros. Con nuestra plataforma, podrás explorar diferentes opciones de inversión, realizar un seguimiento del rendimiento de tu cartera y tomar decisiones informadas para maximizar tus ganancias teniendo un seguimiento de tuy portafolio.
+Visualiza y analiza tus datos financieros a través de gráficos interactivos que te ayudarán a tomar decisiones informadas sobre tus finanzas.
 
 ## Tecnologías Utilizadas
 
-FinTrack utiliza una combinación de poderosas bibliotecas de Python para ofrecerte una experiencia de usuario fluida y efectiva:
+Esta aplicación ha sido desarrollada utilizando Streamlit, una poderosa herramienta que permite la creación de aplicaciones web de manera rápida y eficiente:
 
-- **NumPy**: Para realizar cálculos numéricos y análisis estadístico.
-- **Pandas**: Para la manipulación y análisis de datos financieros.
-- **Matplotlib**: Para crear visualizaciones informativas y gráficos que te ayuden a comprender mejor tus datos financieros.
-- **SciPy**: Para análisis numérico y optimización, lo que puede ser útil para calcular métricas de riesgo y rendimiento en las inversiones.
-- **GeoPandas**: Aunque inicialmente no se planea utilizar GeoPandas, podría ser útil en futuras actualizaciones para analizar datos geográficos relacionados con las inversiones, como la ubicación de activos o el impacto de eventos geopolíticos en los mercados financieros.
+- **Streamlit**: Para el desarrollo rápido de aplicaciones web.
+- **Python**: Para la lógica de programación y el manejo de datos.
+
+## Demostración
+
+Para probar la aplicación y ver cómo puede ayudarte en la gestión de tus finanzas de motocicleta, visita este [enlace](<tu-enlace-aquí>).
+
+## Contribuir al Proyecto
+
+Si estás interesado en contribuir a Wily MotoTrack o deseas sugerir mejoras, no dudes en contactarme. Tu colaboración es bienvenida para hacer de esta herramienta algo aún mejor.
 
 ## Acerca del Autor
 
-¡Hola! Soy Anderson Bedoya, un estudiante aficionado de las finanzas y la tecnología en la Universidad Nacional de Colombia en Medellín. Con FinTrack, espero ayudarte a estar un poco más cerca de la libertad financiera y a tomar el control de tus finanzas personales. 
+Soy Anderson Bedoya, un entusiasta de la tecnología y las finanzas, dedicado a desarrollar soluciones que faciliten la vida de los motociclistas. Con Wily MotoTrack, espero ofrecerte una herramienta que simplifique y mejore la gestión de tus finanzas.
 
-¡Gracias por tu interés en FinTrack! Si tienes alguna pregunta, sugerencia o te gustaría colaborar en este proyecto en desarrollo, no dudes en contactarme a través de mi correo electrónico [abedoyaci@unal.edu.co](mailto:abedoyaci@unal.edu.co) o visitar mi perfil en [LinkedIn](https://www.linkedin.com/in/anderson-bedoya-ciro-9abb1724a).
-
-
-
+¡Gracias por tu interés en Wily MotoTrack! Para cualquier pregunta o sugerencia, no dudes en contactarme a través de mi correo electrónico [abedoyaci@unal.edu.co](mailto:abedoyaci@unal.edu.co) o visitar mi perfil en [LinkedIn](https://www.linkedin.com/in/anderson-bedoya-ciro-9abb1724a).
 
