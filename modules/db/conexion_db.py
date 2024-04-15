@@ -31,7 +31,7 @@ def insertar_usuario(nombre, correo_electronico, contrasena):
     conn = st.connection('mysql', type='sql')
 
     # Añadir usuario
-    conn.execute(
+    conn.query(
         """
         INSERT INTO usuarios (nombre, correo_electronico, contrasena)
         VALUES (%s, %s, %s)
