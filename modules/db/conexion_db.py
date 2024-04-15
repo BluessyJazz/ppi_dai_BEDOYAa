@@ -40,7 +40,7 @@ def insertar_usuario(nombre, correo_electronico, contrasena):
 
     conn.commit()
 
-import mysql.connector
+'''import mysql.connector
 
 def conectar_db():
     """
@@ -61,4 +61,4 @@ def conectar_db():
     except mysql.connector.Error as error:
         print(f"Error al conectar a la base de datos: {error}")
         return None
-        
+'''
