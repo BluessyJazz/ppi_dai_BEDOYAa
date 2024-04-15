@@ -17,7 +17,7 @@ contrasena = st.text_input("Contraseña", type="password")
 if st.button("Registrarse"):
     if nombre and correo and contrasena:
         # Insertar usuario en la base de datos
-        insertar_usuario(nombre, correo, contrasena)
+        #insertar_usuario(nombre, correo, contrasena)
         st.success("¡Registro exitoso! Por favor inicia sesión.")
     else:
         st.error("Por favor completa todos los campos.")

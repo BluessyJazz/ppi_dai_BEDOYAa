@@ -1,9 +1,6 @@
 [theme]
-# Configuración de colores
-backgroundColor = "#1c1c1c"
-secondaryBackgroundColor = "#2c2c2c"
-textColor = "#ffffff"
+primaryColor="#3022ff"
+backgroundColor="#1c1c1c"
+secondaryBackgroundColor="#2c2c2c"
+textColor="#ffffff"
 
-# Configuración de fuentes
-font = "Arial"
-codeFont = "monospace"
