@@ -3,6 +3,10 @@ Este módulo contiene la implementación de la página de registro de usuarios
 
 """
 
+import sys
+sys.path.append('./modules')  # Replace '/path/to/modules' with the actual path
+                                #to the 'modules' directory
+
 import streamlit as st
 from modules.db.conexion_db import insertar_usuario
 
