@@ -46,7 +46,7 @@ streamlit==1.33.0
 tenacity==8.2.3
 toml==0.10.2
 toolz==0.12.1
-tornado @ file:///C:/b/abs_0cbrstidzg/croot/tornado_1696937003724/work
+tornado==6.3.3
 typing_extensions==4.11.0
 tzdata==2024.1
 urllib3==2.2.1
