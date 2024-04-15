@@ -1,0 +1,1 @@
+web: streamlit run Wily_MotoTrack/Inicio.py
