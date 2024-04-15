@@ -6,47 +6,26 @@ Este módulo contiene la implementación de la página de registro de usuarios
 import sys
 sys.path.append('./modules')  # Replace '/path/to/modules' with the actual path
                                 #to the 'modules' directory
-
 import streamlit as st
-from modules.db.conexion_db import insertar_usuario
+from modules.db.conexion_db import conectar_db
+from modules.db.verificar_usuario import verificar_usuario
+from modules.db.crear_usuario import crear_usuario
 
-st.set_page_config(page_title="Iniciar Sesión", page_icon="👤")
+st.set_page_config(page_title="Registro", page_icon="👤")
 
 st.markdown("# Registro de Usuarios")
 
-
-
-nombre = st.text_input("Nombre")
-correo = st.text_input("Correo Electrónico")
+# Solicitar al usuario que introduzca sus datos
+nombre = st.text_input("Nombre de usuario")
+correo = st.text_input("Correo electrónico")
 contrasena = st.text_input("Contraseña", type="password")
+boton_registrar = st.button("Registrar")
 
-if st.button("Registrarse"):
-    if nombre and correo and contrasena:
-        # Insertar usuario en la base de datos
-        insertar_usuario(nombre, correo, contrasena)
-        st.success("¡Registro exitoso! Por favor inicia sesión.")
+# Verificar las credenciales del usuario y crear el usuario si no existe
+if boton_registrar:
+    if verificar_usuario(nombre, correo):
+        st.warning("El nombre de usuario o correo electrónico ya está en uso.\
+                    Por favor, elige otro.")
     else:
-        st.error("Por favor completa todos los campos.")
-
-
-
-
-
-
-
-'''# Initialize connection.
-conn = st.connection('mysql', type='sql')
-
-# Perform query.
-df = conn.query('SELECT * from usuarios;', ttl=600)
-
-# Print results.
-for row in df.itertuples():
-    st.write(f"{row.nombre} has a :{row.correo}:y :{row.contrasena}:")
-
-
-
-
-cursor = conectar_db().cursor()
-cursor.execute("SELECT * FROM usuarios")
-resultados = cursor.fetchall()'''
+        crear_usuario(nombre, correo, contrasena)
+        st.success("Usuario registrado con éxito!")
