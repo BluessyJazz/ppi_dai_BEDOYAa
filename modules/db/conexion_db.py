@@ -22,3 +22,21 @@ Usage:
         print("No se pudieron obtener los datos de la base de datos.")
 """
 
+import streamlit as st
+
+# Inicializar la conexión a la base de datos
+
+
+def insertar_usuario(nombre, correo_electronico, contrasena):
+    conn = st.connection('mysql', type='sql')
+
+    # Añadir usuario
+    conn.execute(
+        """
+        INSERT INTO usuarios (nombre, correo_electronico, contrasena)
+        VALUES (%s, %s, %s)
+        """,
+        (nombre, correo_electronico, contrasena)
+    )
+
+    conn.commit()
