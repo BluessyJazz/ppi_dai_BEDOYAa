@@ -39,3 +39,26 @@ def insertar_usuario(nombre, correo_electronico, contrasena):
     )
 
     conn.commit()
+
+import mysql.connector
+
+def conectar_db():
+    """
+    Establece una conexión a la base de datos MySQL.
+
+    Returns:
+        mysql.connector.connection.MySQLConnection: Objeto de conexión a la base de datos.
+    """
+    try:
+        # Establecer la conexión a la base de datos
+        conexion = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="password",
+            database="usuarios"
+        )
+        return conexion
+    except mysql.connector.Error as error:
+        print(f"Error al conectar a la base de datos: {error}")
+        return None
+        
