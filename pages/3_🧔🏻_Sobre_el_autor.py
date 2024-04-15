@@ -6,7 +6,7 @@ import streamlit as st
 
 st.set_page_config(page_title="Sobre el autor", page_icon="🧔🏻")
 
-st.markdown("# Anderson Bedoya Ciro")
+st.markdown("# Sobre el autor")
 
 st.markdown(
     """
