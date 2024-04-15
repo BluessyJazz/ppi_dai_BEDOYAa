@@ -7,12 +7,3 @@ textColor = "#ffffff"
 # Configuración de fuentes
 font = "Arial"
 codeFont = "monospace"
-
-# Configuración de la barra lateral
-sidebarBackgroundColor = "#111111"
-sidebarTextColor = "#ffffff"
-sidebarBorderColor = "#333333"
-
-# Configuración de la barra de título
-headerBackgroundColor = "#111111"
-headerTextColor = "#ffffff"
