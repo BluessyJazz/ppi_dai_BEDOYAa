@@ -27,7 +27,7 @@ if st.button("Registrarse"):
         st.error("Por favor completa todos los campos.")
 
 # Initialize connection.
-conn = st.connection('pymysql', type='sql')
+conn = st.connection('mysql', type='sql')
 
 # Perform query.
 df = conn.query('SELECT * from usuarios;', ttl=600)
