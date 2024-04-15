@@ -51,7 +51,7 @@ Si estás interesado en contribuir a Wily MotoTrack o deseas sugerir mejoras, no
 
 Soy Anderson Bedoya, un entusiasta de la tecnología y las finanzas, dedicado a desarrollar soluciones que faciliten la vida de los motociclistas. Con Wily MotoTrack, espero ofrecerte una herramienta que simplifique y mejore la gestión de tus finanzas.
 
-¡Gracias por tu interés en Wily MotoTrack! Para cualquier pregunta o sugerencia, no dudes en contactarme a través de mi correo electrónico [abedoyaci@unal.edu.co](mailto:abedoyaci@unal.edu.co) o visitar mi perfil en [LinkedIn](https://www.linkedin.com/in/anderson-bedoya-ciro-9abb1724a).
+¡Gracias por tu interés en Wily MotoTrack! Para cualquier pregunta o sugerencia, no dudes en contactarme a través de mi correo electrónico [abedoyaci@unal.edu.co](mailto:abedoyaci@unal.edu.co) o visitar mi perfiles.
 
 <p>
   <a href="https://github.com/BluessyJazz"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub" width="50" style="margin-right: 20px;"></a>
