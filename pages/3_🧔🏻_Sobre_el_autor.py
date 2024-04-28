@@ -3,7 +3,7 @@
 """
 
 # Importar librerías
-import streamlit as st # Para la interfaz web
+import streamlit as st
 
 # Configuración inicial de la página de Streamlit
 st.set_page_config(page_title="Sobre el autor", page_icon="🧔🏻")
@@ -18,11 +18,11 @@ st.markdown(
     Universidad Nacional de Colombia en Medellín.
 
     Como un apasionado de la programación y las motocicletas, he desarrollado
-    **Wily MotoTrack** como un proyecto personal que entrelaza estas dos grandes
-    pasiones. Mi objetivo es ofrecer una herramienta que ayude a motociclistas
-    como yo a gestionar sus finanzas de manera eficiente y sencilla, mejorando
-    así nuestra experiencia en el manejo diario de nuestras motocicletas y la
-    economía que las rodea.
+    **Wily MotoTrack** como un proyecto personal que entrelaza estas dos
+    grandes pasiones. Mi objetivo es ofrecer una herramienta que ayude a
+    motociclistas como yo a gestionar sus finanzas de manera eficiente y
+    sencilla, mejorando así nuestra experiencia en el manejo diario de nuestras
+    motocicletas y la economía que las rodea.
 
     ### Contacto
     Si tienes alguna pregunta, sugerencia o deseas colaborar en este proyecto,
