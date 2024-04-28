@@ -10,13 +10,14 @@ import psycopg2
 
 
 # Definir la clase para la conexión a la base de datos
-class ConexionDB: 
-    """Clase para la conexión a la base de datos PostgreSQL."""
+class ConexionDB:
+    """
+    Clase para la conexión a la base de datos PostgreSQL.
+    """
 
     def __init__(self):
         """Inicializa la conexión a la base de datos."""
         self.conn = None
-
 
     def conectar(self):
         """
@@ -35,7 +36,6 @@ class ConexionDB:
             port=st.secrets['postgresqlconn']['port']
         )
         return self.conn
-
 
     def cerrar(self):
         """Cerrar la conexión a la base de datos."""

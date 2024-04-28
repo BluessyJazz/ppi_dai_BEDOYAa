@@ -3,17 +3,11 @@ Este módulo contiene la implementación de la página de registro de usuarios
 """
 
 # Importaciones locales
-# from modules.db.conexion_db import conectar_db
-#from db.verificar_usuario import verificar_usuario
-#from db.crear_usuario import crear_usuario
 from modules.db.user_repository import UserRepository
-from modules.db.conexion_db import ConexionDB
 
 # Importar librerías
 import streamlit as st
 
-# Configuración de path para importaciones de módulos
-#sys.path.append('./modules')
 
 # Configuración inicial de la página de Streamlit
 st.set_page_config(page_title="Registro", page_icon="👤")
