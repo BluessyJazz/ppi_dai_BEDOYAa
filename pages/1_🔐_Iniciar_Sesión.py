@@ -15,10 +15,6 @@ st.set_page_config(page_title="Iniciar Sesión", page_icon="🔒")
 # Inicializar la conexión a la base de datos y el repositorio
 user_repo = UserRepository()
 
-# Mostrar usuarios
-users = user_repo.fetch_users()
-st.write(users)
-
 # Verificar si el usuario ha iniciado sesión
 if 'login' not in st.session_state:
     # Inicializar la variable de sesión
