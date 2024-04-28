@@ -29,9 +29,9 @@ st.markdown(
     no dudes en ponerte en contacto conmigo. Estoy abierto a feedback y siempre
     busco mejorar la aplicación con nuevas ideas y perspectivas.
 
-    - **Correo Electrónico:** [abedoyaci@unal.edu.co]
-    (mailto:abedoyaci@unal.edu.co)
-    - **LinkedIn:** [Visita mi perfil aquí]
+    - **Correo Electrónico:** [abedoyaci@unal.edu.co]\
+        (mailto:abedoyaci@unal.edu.co)
+    - **LinkedIn:** [Visita mi perfil aquí]\
     (https://www.linkedin.com/in/anderson-bedoya-ciro-9abb1724a)
 
     Agradezco tu interés en Wily MotoTrack y espero que la encuentres útil.
