@@ -2,36 +2,46 @@
 Este módulo contiene la implementación de la página de registro de usuarios
 """
 
+# Importaciones locales
+# from modules.db.conexion_db import conectar_db
+#from db.verificar_usuario import verificar_usuario
+#from db.crear_usuario import crear_usuario
+from modules.db.user_repository import UserRepository
+from modules.db.conexion_db import ConexionDB
+
 # Importar librerías
-import sys  # Para poder importar módulos de otros directorios
-import streamlit as st  # Para la interfaz web
+import streamlit as st
 
 # Configuración de path para importaciones de módulos
-sys.path.append('./modules')
-
-# Importaciones locales
-from modules.db.conexion_db import conectar_db  # Para la conexión a la base de datos
-from modules.db.verificar_usuario import verificar_usuario  # Para verificar si el usuario ya existe
-from modules.db.crear_usuario import crear_usuario  # Para crear un nuevo usuario
+#sys.path.append('./modules')
 
 # Configuración inicial de la página de Streamlit
 st.set_page_config(page_title="Registro", page_icon="👤")
 
+# Dar titulo a la página
 st.markdown("# Registro de Usuarios")
 
+# Instancia del repositorio de usuarios
+user_repo = UserRepository()
+
 # Solicitar al usuario que introduzca sus datos
-nombre = st.text_input("Nombre de usuario")  # Campo para el nombre de usuario
-correo = st.text_input("Correo electrónico")  # Campo para el correo electrónico
-contrasena = st.text_input("Contraseña", type="password")  # Campo para la contraseña
-boton_registrar = st.button("Registrar")  # Botón para registrar al usuario
+nombre = st.text_input("Nombre de usuario")
+correo = st.text_input("Correo electrónico")
+contrasena = st.text_input("Contraseña", type="password")
+boton_registrar = st.button("Registrar")
 
 # Verificar las credenciales del usuario y crear el usuario si no existe
 if boton_registrar:
-    if verificar_usuario(nombre, correo):
+    if user_repo.verify_user(nombre, correo):
         st.warning("""
                     El nombre de usuario o correo electrónico ya
                     está en uso. Por favor, elige otro.
                     """)
     else:
-        crear_usuario(nombre, correo, contrasena)
-        st.success("Usuario registrado con éxito!")
+        registrado = user_repo.create_user(nombre, correo,
+                                           contrasena, 'usuario') > 0
+        if registrado:
+            st.success("Usuario registrado con éxito!")
+        else:
+            st.error("Ha ocurrido un error al registrar el usuario. \
+                     Por favor, inténtalo de nuevo.")
