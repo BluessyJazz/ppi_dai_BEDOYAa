@@ -145,6 +145,25 @@ class UserRepository:
             )
             return cursor.rowcount
 
+    def update_user_password(self, correo, contrasena):
+        """
+        Actualiza la contraseña de un usuario en la base de datos.
+
+        Args:
+            correo (str): El correo electrónico del usuario.
+            contrasena (str): La nueva contraseña del usuario.
+
+        Returns:
+            int: El número de filas afectadas por la operación.
+        """
+
+        with self.manage_db_connection() as cursor:
+            cursor.execute(
+                "UPDATE usuarios SET contrasena = %s WHERE correo = %s",
+                (contrasena, correo)
+            )
+            return cursor.rowcount
+
     def delete_user(self, correo):
         """
         Elimina un usuario de la base de datos.
