@@ -30,7 +30,6 @@ markdown-it-py==3.0.0
 MarkupSafe==2.1.5
 matplotlib==3.8.4
 mdurl==0.1.2
-mkl-service==2.4.0
 mysql-connector-python==8.3.0
 mysqlclient==2.2.4
 numpy==1.26.4
