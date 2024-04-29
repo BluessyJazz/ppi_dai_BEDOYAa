@@ -283,7 +283,8 @@ class Menu:
             st.error("Las contraseñas no coinciden. Por favor, \
                         inténtalo de nuevo.")
             return False
-        if not self.is_password_strong(contrasena):
+        if self.is_password_strong(contrasena) != "ok":
+            st.error(self.is_password_strong(contrasena))
             return False
 
         return True
