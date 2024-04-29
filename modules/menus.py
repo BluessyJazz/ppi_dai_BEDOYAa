@@ -1,8 +1,19 @@
+"""
+Este módulo contiene la implementación de los menús de la aplicación
+utilizando Streamlit.
+"""
+
+# Importar os para eliminar archivos temporales
 import os
+# Importar re para expresiones regulares
 import re
+# Importar time para pausar la ejecución
 import time
+# Importar streamlit
 import streamlit as st
+# Importar librería para menús
 from streamlit_option_menu import option_menu
+# Importar páginas locales
 from paginas.bienvenida import pagina_bienvenida
 from paginas.sobre_el_autor import info_autor
 from modules.auth.auth_utils import AuthUtils
@@ -22,6 +33,7 @@ class Menu:
         Muestra la página de inicio de la aplicación.
         """
 
+        # Cargar menú en la barra lateral
         with st.sidebar:
             selected = option_menu(
                 None,
@@ -33,6 +45,7 @@ class Menu:
                 default_index=0
             )
 
+        # Mostrar la página seleccionada
         if selected == 'Wily MotoTrack':
 
             pagina_bienvenida()
@@ -64,6 +77,10 @@ class Menu:
         # Autenticar al usuario
         authenticator = auth_utils.authenticate()
 
+        # Eliminar el archivo de configuración temporal
+        os.remove('temp_config.yaml')
+
+        # Cargar menú en la barra lateral
         with st.sidebar:
             selected = option_menu(
                 None,
@@ -73,9 +90,11 @@ class Menu:
                 default_index=0
             )
 
+            # Mostrar el botón de cierre de sesión
             if authenticator.logout(button_name="Cerrar Sesión"):
                 st.session_state["authentication_status"] = False
-                
+
+        # Mostrar la página seleccionada          
         if selected == 'Wily MotoTrack':
 
             pagina_bienvenida()
@@ -103,11 +122,14 @@ class Menu:
             'Login': 'Ingresar'
         }
 
+        # Autenticar al usuario
         authenticator.login(fields=campos)
 
+        # Mostrar mensaje de autenticación
         if st.session_state["authentication_status"]:
             st.title("Iniciando sesión...")
 
+        # Mostrar mensaje de error
         else:
             if st.session_state["authentication_status"] is None:
                 st.warning('Por favor ingresa tu usuario y contraseña')
@@ -119,6 +141,7 @@ class Menu:
                         [registrarte](/Registro).
                         """)
 
+        # Eliminar el archivo de configuración temporal            
         os.remove('temp_config.yaml')
 
     def register_page(self):
@@ -129,15 +152,15 @@ class Menu:
         # Instancia del repositorio de usuarios
         user_repo = UserRepository()
 
+        # Inicializar variables de sesión
         if 'registrado' not in st.session_state:
             st.session_state.registrado = False
-
-        if "usuario" not in st.session_state:
+        if 'usuario' not in st.session_state:
             st.session_state.usuario = False
 
         if st.session_state.registrado is False:
+            
             # Solicitar al usuario que introduzca sus datos
-
             nombre = st.text_input("Nombre")
             correo = st.text_input("Correo")
             usuario = st.text_input("Usuario")
@@ -145,6 +168,7 @@ class Menu:
             confirma_contrasena = st.text_input("Confirma tu contraseña",
                                                 type="password")
 
+            # Convertir el usuario a minúsculas
             usuario = usuario.lower()
 
             # Verificar si el usuario ya existe
@@ -274,5 +298,3 @@ class Menu:
             policy = file.read()
 
         st.markdown(policy, unsafe_allow_html=True)
-
-
