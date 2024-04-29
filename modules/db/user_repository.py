@@ -5,6 +5,7 @@ para interactuar con la base de datos de usuarios.
 
 # Importar librerías necesarias para la conexión a la base de datos
 from contextlib import contextmanager
+import bcrypt
 from .conexion_db import ConexionDB
 
 
@@ -58,7 +59,7 @@ class UserRepository:
         Consulta y recupera todos los usuarios de la base de datos.
 
         Returns:
-            list: Una lista de diccionarios con los 
+            list: Una lista de diccionarios con los
             usuarios de la base de datos.
         """
 
@@ -67,13 +68,14 @@ class UserRepository:
             users = cursor.fetchall()
             return users
 
-    def create_user(self, nombre, correo, contrasena, rol):
+    def create_user(self, nombre, correo, usuario, contrasena, rol):
         """
         Crea un nuevo usuario en la base de datos.
 
         Args:
             nombre (str): El nombre del usuario.
             correo (str): El correo electrónico del usuario.
+            usuario (str): El nombre de usuario del usuario.
             contrasena (str): La contraseña del usuario.
             rol (str): El rol del usuario.
 
@@ -81,15 +83,22 @@ class UserRepository:
             int: El número de filas afectadas por la operación.
         """
 
+        # Encriptar la contraseña antes de guardarla en la base de datos
+        contrasena_hash = bcrypt.hashpw(contrasena.encode('utf-8'),
+                                        bcrypt.gensalt())
+        # Asegúrate de que la contraseña hasheada sea una cadena 
+        # decodificada antes de almacenarla
+        contrasena_hash = contrasena_hash.decode('utf-8')
+
         with self.manage_db_connection() as cursor:
             cursor.execute(
-                "INSERT INTO usuarios (nombre, correo, contrasena, rol) \
-                    VALUES (%s, %s, %s, %s)",
-                (nombre, correo, contrasena, rol)
+                "INSERT INTO usuarios (nombre, correo, usuario, contrasena, \
+                    rol) VALUES (%s, %s, %s, %s, %s)",
+                (nombre, correo, usuario, contrasena_hash, rol)
             )
             return cursor.rowcount
 
-    def fetch_user_by_name(self, nombre):
+    def fetch_user_by_user(self, usuario):
         """
         Consulta y recupera un usuario por su nombre.
 
@@ -102,7 +111,7 @@ class UserRepository:
 
         with self.manage_db_connection() as cursor:
             cursor.execute("SELECT * FROM usuarios \
-                WHERE nombre = %s", (nombre,))
+                WHERE nombre = %s", (usuario,))
             user = cursor.fetchone()
             return user
 
@@ -123,7 +132,7 @@ class UserRepository:
             user = cursor.fetchone()
             return user
 
-    def update_user(self, nombre, correo, contrasena, rol):
+    def update_user(self, nombre, correo, contrasena, usuario, rol):
         """
         Actualiza un usuario en la base de datos.
 
@@ -139,8 +148,8 @@ class UserRepository:
 
         with self.manage_db_connection() as cursor:
             cursor.execute(
-                "UPDATE usuarios SET correo = %s, contrasena = %s, rol = %s \
-                    WHERE nombre = %s",
+                "UPDATE usuarios SET correo = %s, contrasena = %s, \
+                    usuario = %s, rol = %s, WHERE nombre = %s",
                 (correo, contrasena, rol, nombre)
             )
             return cursor.rowcount
@@ -179,12 +188,12 @@ class UserRepository:
             cursor.execute("DELETE FROM usuarios WHERE correo = %s", (correo,))
             return cursor.rowcount
 
-    def verify_user(self, nombre, correo):
+    def verify_user(self, usuario, correo):
         """
         Verifica si un usuario ya existe en la base de datos.
 
         Args:
-            nombre (str): El nombre del usuario a verificar.
+            usuario (str): El usuario del usuario a verificar.
             correo (str): El correo del usuario a verificar.
 
         Returns:
@@ -192,8 +201,8 @@ class UserRepository:
         """
 
         with self.manage_db_connection() as cursor:
-            cursor.execute("SELECT * FROM usuarios WHERE nombre = %s \
-                OR correo = %s", (nombre, correo))
+            cursor.execute("SELECT * FROM usuarios WHERE usuario = %s \
+                OR correo = %s", (usuario, correo))
             user = cursor.fetchone()
             return user is not None
 
@@ -211,7 +220,13 @@ class UserRepository:
         """
         with self.manage_db_connection() as cursor:
             cursor.execute(
-                "SELECT * FROM usuarios WHERE nombre = %s AND contrasena = %s",
-                (username, password)
+                "SELECT contrasena FROM usuarios WHERE usuario = %s",
+                (username,)
             )
-            return cursor.fetchone() is not None
+            user_record = cursor.fetchone()
+            if user_record is not None:
+                hashed_password = user_record[0]
+                # Verificación del hash
+                return bcrypt.checkpw(password.encode('utf-8'),
+                                      hashed_password.encode('utf-8'))
+            return False

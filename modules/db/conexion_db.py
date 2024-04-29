@@ -1,5 +1,5 @@
 """
-Este módulo contiene la clase para la conexión a la base de datos PostgreSQL. 
+Este módulo contiene la clase para la conexión a la base de datos PostgreSQL.
 """
 
 # Importar las librerías
