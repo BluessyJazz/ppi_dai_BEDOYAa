@@ -18,6 +18,13 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Si no se ha iniciado sesión, mostrar la página de inicio de sesión
+# Inicializar el menú
 menu = Menu()
-menu.land_page()
+
+# Si no se ha iniciado sesión, mostrar la página de inicio de sesión
+if not st.session_state.get("authentication_status"):
+    menu.land_page()
+
+# Si se ha iniciado sesión, mostrar la página de usuario
+else:
+    menu.user_page()

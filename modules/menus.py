@@ -53,6 +53,37 @@ class Menu:
 
             info_autor()
 
+    def user_page(self):
+        """
+        Muestra la página de inicio de la aplicación.
+        """
+
+        # Inicializar AuthUtils
+        auth_utils = AuthUtils()
+
+        # Autenticar al usuario
+        authenticator = auth_utils.authenticate()
+
+        with st.sidebar:
+            selected = option_menu(
+                None,
+                ["Wily MotoTrack", "Sobre el autor"],
+                icons=["speedometer2", "person-lines-fill"],
+                menu_icon="cast",
+                default_index=0
+            )
+
+            if authenticator.logout(button_name="Cerrar Sesión"):
+                st.session_state["authentication_status"] = False
+                
+        if selected == 'Wily MotoTrack':
+
+            pagina_bienvenida()
+
+        elif selected == 'Sobre el autor':
+
+            info_autor()
+
     def login_page(self):
         """
         Muestra el menú de la inicio de sesión.
@@ -75,8 +106,7 @@ class Menu:
         authenticator.login(fields=campos)
 
         if st.session_state["authentication_status"]:
-            st.title("Pronto podrás usar la aplicación")
-            authenticator.logout()
+            st.title("Iniciando sesión...")
 
         else:
             if st.session_state["authentication_status"] is None:
@@ -111,8 +141,9 @@ class Menu:
             nombre = st.text_input("Nombre")
             correo = st.text_input("Correo")
             usuario = st.text_input("Usuario")
-            contrasena = st.text_input("Contraseña")
-            confirma_contrasena = st.text_input("Confirma tu contraseña")
+            contrasena = st.text_input("Contraseña", type="password")
+            confirma_contrasena = st.text_input("Confirma tu contraseña",
+                                                type="password")
 
             usuario = usuario.lower()
 
