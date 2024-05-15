@@ -1,5 +1,6 @@
 .streamlit/
 usuarios.txt
+pages/prueba.py
 __pycache__
 modules/__pycache__
 modules/db/__pycache__
