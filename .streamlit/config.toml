@@ -3,3 +3,6 @@ primaryColor="#3022ff"
 backgroundColor="#1f1f33"
 secondaryBackgroundColor="#252558"
 textColor="#ffffff"
+
+[client]
+showSidebarNavigation = false
