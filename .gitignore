@@ -1,4 +1,4 @@
-.streamlit/
+.streamlit/secrets.toml
 usuarios.txt
 pages/prueba.py
 __pycache__
