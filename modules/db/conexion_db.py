@@ -1,27 +1,131 @@
 """
-Este módulo contiene la implementación de
-la conexión a la base de datos PostgreSQL.
+Este módulo contiene la clase para la conexión a la base de datos PostgreSQL.
 """
 
-# Importa la biblioteca psycopg2 para la conexión con PostgreSQL
+# Importar las librerías
+# Streamlit para acceder a las variables de entorno
+import streamlit as st
+# La biblioteca psycopg2 para la conexión con PostgreSQL
 import psycopg2
 
 
-def conectar_db():
+# Definir la clase para la conexión a la base de datos
+class ConexionDB:
     """
-    Establece una conexión con la base de datos PostgreSQL.
+    Clase para la conexión a la base de datos PostgreSQL.
+    """
 
-    Returns:
-        psycopg2.extensions.connection: Un objeto
-        de conexión a la base de datos.
-    """
-    # Establece una conexión con la base de datos PostgreSQL
-    conn = psycopg2.connect(
-        dbname='wilymoto',  # Nombre de la base de datos
-        user='bluessyjazz',  # Nombre de usuario
-        password='Vg74PiTzYAfyVtacoFO7lhUJJiqtekAU',  # Contraseña
-        host='dpg-coekj220si5c739jqg4g-a.oregon-'
-             'postgres.render.com',  # Dirección del host
-        port='5432'  # Puerto PostgreSQL por defecto
-    )
-    return conn
+    def __init__(self):
+        """Inicializa la conexión a la base de datos."""
+
+        # Inicializa la conexión como nula
+        self.conn = None
+
+    def conectar(self):
+        """
+        Establece una conexión con la base de datos PostgreSQL.
+
+        Args:
+            None
+
+        Returns:
+            psycopg2.extensions.connection: Un objeto
+            de conexión a la base de datos.
+        """
+
+        self.conn = psycopg2.connect(
+            dbname=st.secrets['postgresqlconn']['database'],
+            user=st.secrets['postgresqlconn']['username'],
+            password=st.secrets['postgresqlconn']['password'],
+            host=st.secrets['postgresqlconn']['host'],
+            port=st.secrets['postgresqlconn']['port']
+        )
+
+        return self.conn
+
+    def obtener_usuarios(self):
+        """
+        Obtiene los usuarios y sus credenciales de la base de datos y los
+        devuelve en un diccionario.
+
+        Args:
+            None
+
+        Returns:
+            dict: Un diccionario que contiene los usuarios y sus credenciales.
+        """
+        # Conecta a la base de datos
+        conn = self.conectar()
+
+        # Crea un cursor
+        cursor = conn.cursor()
+
+        # Ejecuta la consulta SQL para obtener los usuarios y sus credenciales
+        cursor.execute("SELECT usuario, correo, logged_in, nombre, contrasena "
+                       "FROM usuarios")
+
+        # Obtiene todos los registros
+        registros = cursor.fetchall()
+
+        # Cierra la conexión
+        self.cerrar()
+
+        # Crea un diccionario para almacenar los usuarios y sus credenciales
+        usuarios = {'usernames': {}}
+
+        # Itera sobre los registros y los añade al diccionario
+        for registro in registros:
+            usuarios['usernames'][registro[0]] = {
+                'email': registro[1],
+                'logged_in': registro[2],
+                'name': registro[3],
+                'password': registro[4]
+            }
+
+        return usuarios
+
+    def insertar_usuario(self, email, username, name, password):
+        """
+        Inserta un nuevo usuario en la base de datos.
+
+        Args:
+            email (str): El correo electrónico del usuario.
+            username (str): El nombre de usuario.
+            name (str): El nombre del usuario.
+            password (str): La contraseña del usuario.
+
+        Returns:
+            None
+        """
+
+        # Conectar a la base de datos
+        conn = self.conectar()
+
+        # Crear un cursor
+        cursor = conn.cursor()
+
+        # Insertar el nuevo usuario en la base de datos
+        cursor.execute('''
+            INSERT INTO usuarios (correo, usuario, nombre, contrasena)
+            VALUES (%s, %s, %s, %s)
+        ''', (email, username, name, password))
+
+        # Guardar los cambios
+        conn.commit()
+
+        # Cerrar el cursor
+        self.cerrar()
+
+    def cerrar(self):
+        """
+        Cerrar la conexión a la base de datos.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
+        if self.conn is not None:
+            self.conn.close()
+            self.conn = None
