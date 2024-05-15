@@ -6,7 +6,7 @@ from modules.auth.authenticate import Authenticate
 
 def authenticated_menu(auth):
     # Show a navigation menu for authenticated users
-    st.sidebar.page_link("pages/prueba.py", label="Manage users")
+    # st.sidebar.page_link("pages/prueba.py", label="Manage users")
     # st.sidebar.page_link(
     #    "pages/autentica2.py",
     #    label="Manage admin access",
