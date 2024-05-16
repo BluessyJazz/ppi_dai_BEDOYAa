@@ -15,8 +15,8 @@ import streamlit as st
 
 
 from ..utilities.validator import Validator
-from .cookie_handler import CookieHandler
-from .authentication_handler import AuthenticationHandler
+from .cookie import CookieHandler
+from .authentication import AuthenticationHandler
 
 
 class Authenticate:
