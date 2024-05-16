@@ -146,38 +146,34 @@ with tab2:
 #    auth = init_auth()
     # au.login()
 
+# auth = init_auth()
 
+# if auth:
+#    st.title("INICIALIZADA")
 
-'''
-auth = init_auth()
+# if 'authentication_status' in st.session_state:
+#    st.write("ESTADO INICIAL")
 
-if auth:
-    st.title("INICIALIZADA")
+#    if 'wilymototrack_session' in st.session_state['init']:
+#        st.write("COOKIE ENCONTRADA")
+#        st.write("AUTENTICADO")
+#        auth = st.session_state.get('auth', None)
+#        st.session_state
 
-if 'authentication_status' in st.session_state:
-    st.write("ESTADO INICIAL")
+#    else:
+#        auth = st.session_state.get('auth', None)
+#        st.write("NO AUTENTICADO")
+#        st.write(auth)
+#        st.session_state
 
-    if 'wilymototrack_session' in st.session_state['init']:
-        st.write("COOKIE ENCONTRADA")
-        st.write("AUTENTICADO")
-        auth = st.session_state.get('auth', None)
-        st.session_state
+# if 'authentication_status' not in st.session_state:
+#    menu(auth)
 
-    else:
-        auth = st.session_state.get('auth', None)
-        st.write("NO AUTENTICADO")
-        st.write(auth)
-        st.session_state
+# else:
+#    menu(auth=None)
+#    st.write("ELSE")
 
-if 'authentication_status' not in st.session_state:
-    menu(auth)
-
-else:
-    menu(auth=None)
-    st.write("ELSE")
-
-st.session_state
-'''
+# st.session_state
 
 # if 'authenticacion_status' in st.session_state:
 #    st.title("AUTENTICADO")
