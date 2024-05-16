@@ -129,6 +129,8 @@ with tab2:
             <td style="border: none;"><a href="https://golance.com/freelancer/anderson.bedoya.ciro"><img src="https://res-1.cloudinary.com/golance/image/upload/q_auto:good/v1/blog_staging/icon-round-white-BG.svg" alt="goLance" width="50" style="margin-right: 20px;"></a></td>
             <td style="border: none;"><a href="https://www.upwork.com/freelancers/~017adf9fda4a06cf8a"><img src="https://cdn.worldvectorlogo.com/logos/upwork-roundedsquare-1.svg" alt="Upwork" width="50" style="margin-right: 20px;"></a></td>
             <td style="border: none;"><a href="https://www.freelancer.com/u/bluessyjazz"><img src="https://cdn.worldvectorlogo.com/logos/freelancer-1.svg" alt="Freelancer" width="50" style="margin-right: 20px;"></a></td>
+        </tr>
+        <tr> 
             <td style="border: none;"><a href="https://github.com/BluessyJazz"><img src="https://cdn.worldvectorlogo.com/logos/github-icon-2.svg" alt="GitHub" width="50" style="margin-right: 20px;"></a></td>
             <td style="border: none;"><a href="https://stackoverflow.com/users/24114620/anderson-bedoya-ciro"><img src="https://cdn.worldvectorlogo.com/logos/stack-overflow.svg" alt="Stack Overflow" width="50" style="margin-right: 20px;"></a></td>
             <td style="border: none;"><a href="https://www.reddit.com/user/BluessyJazz/"><img src="https://cdn.worldvectorlogo.com/logos/reddit-4.svg" alt="Reddit" width="50" style="margin-right: 20px;"></a></td>
