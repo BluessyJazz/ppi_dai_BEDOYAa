@@ -2,6 +2,7 @@ import streamlit as st
 from typing import Optional
 
 from modules.auth.authenticate import Authenticate
+from modules.auth import init_auth
 
 
 def authenticated_menu(auth):
@@ -22,7 +23,6 @@ def authenticated_menu(auth):
 
 def unauthenticated_menu():
     # Show a navigation menu for unauthenticated users
-    st.sidebar.page_link("pages/iniciar_sesion.py", label="Iniciar sesión 🔐")
     st.sidebar.page_link("pages/registrarse.py", label="Registrarse 📝")
 
 
@@ -33,11 +33,9 @@ def menu(auth: Optional[Authenticate] = None):
 
     if auth is None:
         unauthenticated_menu()
-        return None
 
-    elif auth == 'ok':
-        return auth
-    else:
+    elif auth is not None:
+        # Inicializar la autenticación
         authenticated_menu(auth)
 
 
