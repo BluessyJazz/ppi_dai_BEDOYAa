@@ -13,6 +13,8 @@ import streamlit as st
 # Importar módulos locales
 # - menu: Para mostrar el menú de la aplicación en la barra lateral
 from menu import menu
+from modules.iniciar_sesion import login
+from modules.auth import init_auth
 
 # Configuración de la página
 st.set_page_config(
@@ -30,7 +32,35 @@ with tab1:
     st.markdown(
         """
         # Bienvenido a Wily MotoTrack! 👋
+        """
+    )
 
+    auth = init_auth()
+
+    if (
+        'authentication_status' not in st.session_state or
+        not st.session_state['authentication_status'] or
+        not 'wilymototrack_session' not in st.session_state['init']
+    ):
+
+        login(auth)
+
+        if (
+            'wilymototrack_session' in st.session_state['init'] and
+            st.session_state['logout'] is not True
+        ):
+            menu(auth)
+        elif st.session_state['logout'] is True:
+            menu(auth=None)
+        else:
+            menu(auth=None)
+
+    else:
+        auth.login()
+        menu(auth)
+
+    st.markdown(
+        """
         ## ¿Qué es Wily MotoTrack? 🏍️
 
         Wily MotoTrack es una aplicación para el registro de gastos e ingresos
@@ -109,10 +139,67 @@ with tab2:
         unsafe_allow_html=True
     )
 
-if ('authentication_status' not in st.session_state or
-   not st.session_state['authentication_status']):
-    menu(auth=None)
+# Inicializar la autenticación
+# if 'authentication_status' in st.session_state:
+#    auth = st.session_state.get('auth', None)
+# else:
+#    auth = init_auth()
+    # au.login()
+
+
+
+'''
+auth = init_auth()
+
+if auth:
+    st.title("INICIALIZADA")
+
+if 'authentication_status' in st.session_state:
+    st.write("ESTADO INICIAL")
+
+    if 'wilymototrack_session' in st.session_state['init']:
+        st.write("COOKIE ENCONTRADA")
+        st.write("AUTENTICADO")
+        auth = st.session_state.get('auth', None)
+        st.session_state
+
+    else:
+        auth = st.session_state.get('auth', None)
+        st.write("NO AUTENTICADO")
+        st.write(auth)
+        st.session_state
+
+if 'authentication_status' not in st.session_state:
+    menu(auth)
 
 else:
-    auth = st.session_state.get('auth', None)
-    menu(auth)
+    menu(auth=None)
+    st.write("ELSE")
+
+st.session_state
+'''
+
+# if 'authenticacion_status' in st.session_state:
+#    st.title("AUTENTICADO")
+#    st.session_state.authenticacion_status
+
+# if 'wilymototrack_session' not in st.session_state['init']:
+#    st.title("NO COOKIE")
+#    menu(auth=None)
+
+# else:
+#    st.title("COOKIE ENCONTRADA")
+#    auth = st.session_state.get('auth', None)
+#    st.session_state
+#    menu(auth)
+
+
+# menu(au)
+
+# if ('authentication_status' not in st.session_state or
+#   not st.session_state['authentication_status']):
+#    menu(au=None)
+
+# elif st.session_state['authentication_status']:
+#    au = st.session_state.get('auth', None)
+#    menu(au)
