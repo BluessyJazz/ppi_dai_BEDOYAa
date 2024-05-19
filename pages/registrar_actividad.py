@@ -68,7 +68,10 @@ import pytz
 
 # Hora y fecha actuales colombianas
 tz = pytz.timezone('America/Bogota')
-fecha = st.date_input("Fecha", datetime.now(tz).date())
+fecha = datetime.now(tz).date()
+hora = datetime.now(tz).time()
+
+fecha = st.date_input("Fecha", fecha)
 
 hora = st.time_input("Hora", datetime.now().time())
 
