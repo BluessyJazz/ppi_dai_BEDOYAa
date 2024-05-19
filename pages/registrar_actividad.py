@@ -67,13 +67,17 @@ monto = st.number_input("Monto", min_value=0, step=1)
 import pytz
 
 # Hora y fecha actuales colombianas
-tz = pytz.timezone('America/Bogota')
-fecha = datetime.now(tz).date()
-hora = datetime.now(tz).time()
+timezone = pytz.timezone('America/Bogota')
+fecha = datetime.now(timezone).date()
+hora = datetime.now(timezone).time()
+
+hora = pytz.timezone("America/Bogota").localize(hora, is_dst=None)
+
+hora = hora.astimezone(pytz.timezone(timezone)).strftime("%I:%M %p %Z")
 
 fecha = st.date_input("Fecha", fecha)
 
-hora = st.time_input("Hora", datetime.now().time())
+hora = st.time_input("Hora", hora)
 
 fecha = datetime.combine(fecha, hora)
 
