@@ -57,6 +57,7 @@ else:
 # Contenido de la pestaña de inicio
 with tab1:
     st.session_state
+    st.write(auth)
     st.markdown(
         """
         # Bienvenido a Wily MotoTrack! 👋

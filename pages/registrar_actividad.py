@@ -66,7 +66,7 @@ monto = st.number_input("Monto", min_value=0, step=1)
 
 import pytz
 
-fecha = st.date_input("Fecha", datetime.now(tzinfo=pytz.timezone("America/Bogota")))
+fecha = st.date_input("Fecha", datetime.now().astimezone(pytz.timezone("America/Bogota")).date())
 
 hora = st.time_input("Hora", datetime.now().time())
 
