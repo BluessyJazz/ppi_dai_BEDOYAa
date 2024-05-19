@@ -23,14 +23,17 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Pestañas de la página
-tab1, tab2 = st.tabs(["Inicio", "Acerca de 🧔🏻"])
-
 # Inicializar la autenticación
 auth = init_auth()
 
+if auth:
+    st.title("INICIALIZADA")
+
 auth.silence_login()
 # auth.login()
+
+# Pestañas de la página
+tab1, tab2 = st.tabs(["Inicio", "Acerca de 🧔🏻"])
 
 if (
     'authentication_status' not in st.session_state or
