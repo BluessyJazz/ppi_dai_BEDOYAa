@@ -95,6 +95,9 @@ meses = [
     'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
     ]
 
+# Combinar la fecha y la hora en un solo objeto datetime
+fecha_hora = datetime.combine(fecha, st.session_state['hora'])
+
 fecha_formateada = (
                     f"{fecha_hora.day} de {meses[fecha_hora.month - 1]} "
                     f"del {fecha_hora.year}"
