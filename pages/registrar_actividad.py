@@ -89,9 +89,6 @@ hora = hora_placeholder.time_input("Hora", st.session_state['hora'])
 # Actualizar st.session_state['hora'] con la hora seleccionada
 st.session_state['hora'] = hora
 
-# Combinar la fecha y la hora en un solo objeto datetime
-fecha_hora = datetime.combine(fecha, st.session_state['hora'])
-
 # Formatear la fecha
 meses = [
     'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
@@ -111,6 +108,8 @@ descripcion = st.text_area("Descripción")
 if st.button("Registrar actividad"):
 
     user_id = st.session_state.get("user_id")
+    # Combinar la fecha y la hora en un solo objeto datetime
+    fecha_hora = datetime.combine(fecha, st.session_state['hora'])
 
     # Insertar la actividad en la base de datos
     db.insertar_registro_financiero(actividad, tipo, monto,
