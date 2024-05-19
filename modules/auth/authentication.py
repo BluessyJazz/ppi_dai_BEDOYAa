@@ -130,7 +130,7 @@ class AuthenticationHandler:
                 break
         return found
 
-    def execute_login(self, identifier: Optional[str] = None,
+    def execute_login(self, username: Optional[str] = None,
                       token: Optional[dict] = None):
         """
         Executes login by setting authentication status to true and adding
@@ -145,22 +145,22 @@ class AuthenticationHandler:
             The re-authentication cookie to retrieve the username from.
         """
 
-        if identifier:
+        if username:
             # Obtener el nombre de usuario asociado al correo electrónico
-            username = self._get_username('email', identifier)
+            # username = self._get_username('email', identifier)
 
             # Si no se encontró un nombre de usuario, asumir que el
             # identificador es un nombre de usuario
-            if not username:
-                username = identifier
+            # if not username:
+            #    username = identifier
 
-                st.session_state['username'] = username
-                name = self.credentials['usernames'][username]['name']
-                st.session_state['name'] = name
-                st.session_state['authentication_status'] = True
-                self.credentials['usernames'][username]['logged_in'] = True
-                user_id = self.credentials['usernames'][username]['id']
-                st.session_state['user_id'] = user_id
+            st.session_state['username'] = username
+            name = self.credentials['usernames'][username]['name']
+            st.session_state['name'] = name
+            st.session_state['authentication_status'] = True
+            self.credentials['usernames'][username]['logged_in'] = True
+            user_id = self.credentials['usernames'][username]['id']
+            st.session_state['user_id'] = user_id
 
         if token:
             st.session_state['username'] = token['username']
