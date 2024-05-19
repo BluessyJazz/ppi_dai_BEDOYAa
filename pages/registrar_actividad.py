@@ -64,7 +64,9 @@ actividad = st.text_input("Actividad")
 
 monto = st.number_input("Monto", min_value=0, step=1)
 
-fecha = st.date_input("Fecha", datetime.now())
+import pytz
+
+fecha = st.date_input("Fecha", datetime.now(tzinfo=pytz.timezone("America/Bogota")))
 
 hora = st.time_input("Hora", datetime.now().time())
 
