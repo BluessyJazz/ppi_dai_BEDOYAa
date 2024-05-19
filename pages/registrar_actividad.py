@@ -68,18 +68,18 @@ import pytz
 
 # Hora y fecha actuales colombianas
 timezone = pytz.timezone('America/Bogota')
-fecha = datetime.now(timezone).date()
-hora = datetime.now(timezone).time()
+fecha_hora_actual = datetime.now(timezone)
 
-hora = pytz.timezone("America/Bogota").localize(hora, is_dst=None)
+# Extraer la fecha y la hora
+fecha = fecha_hora_actual.date()
+hora = fecha_hora_actual.time()
 
-hora = hora.astimezone(pytz.timezone(timezone)).strftime("%I:%M %p %Z")
-
+# Ahora puedes usar fecha y hora en tus widgets de Streamlit
 fecha = st.date_input("Fecha", fecha)
-
 hora = st.time_input("Hora", hora)
 
-fecha = datetime.combine(fecha, hora)
+# Combinar la fecha y la hora en un solo objeto datetime
+fecha_hora = datetime.combine(fecha, hora)
 
 descripcion = st.text_area("Descripción")
 
