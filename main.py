@@ -13,7 +13,6 @@ import streamlit as st
 # Importar módulos locales
 # - menu: Para mostrar el menú de la aplicación en la barra lateral
 from menu import menu
-from modules.iniciar_sesion import login
 from modules.auth import init_auth
 
 # Configuración de la página
@@ -27,40 +26,38 @@ st.set_page_config(
 # Pestañas de la página
 tab1, tab2 = st.tabs(["Inicio", "Acerca de 🧔🏻"])
 
+# Inicializar la autenticación
+auth = init_auth()
+
+auth.silence_login()
+
+if (
+    'authentication_status' not in st.session_state or
+    not st.session_state['authentication_status']
+):
+
+    # login(auth)
+
+    # if (
+    #    'wilymototrack_session' in st.session_state['init'] and
+    #    st.session_state['logout'] is not True
+    # ):
+    #    menu(auth)
+    # elif st.session_state['logout'] is True:
+    #    menu(auth=None)
+    # else:
+    menu(auth=None)
+
+else:
+    menu(auth)
+
+
 # Contenido de la pestaña de inicio
 with tab1:
     st.markdown(
         """
         # Bienvenido a Wily MotoTrack! 👋
-        """
-    )
 
-    auth = init_auth()
-
-    if (
-        'authentication_status' not in st.session_state or
-        not st.session_state['authentication_status'] or
-        not 'wilymototrack_session' not in st.session_state['init']
-    ):
-
-        login(auth)
-
-        if (
-            'wilymototrack_session' in st.session_state['init'] and
-            st.session_state['logout'] is not True
-        ):
-            menu(auth)
-        elif st.session_state['logout'] is True:
-            menu(auth=None)
-        else:
-            menu(auth=None)
-
-    else:
-        auth.login()
-        menu(auth)
-
-    st.markdown(
-        """
         ## ¿Qué es Wily MotoTrack? 🏍️
 
         Wily MotoTrack es una aplicación para el registro de gastos e ingresos
@@ -142,6 +139,7 @@ with tab2:
         """,
         unsafe_allow_html=True
     )
+
 
 # Inicializar la autenticación
 # if 'authentication_status' in st.session_state:
