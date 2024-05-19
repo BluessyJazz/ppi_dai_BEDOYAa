@@ -10,6 +10,7 @@ actividad correctamente.
 # - streamlit: Para la interfaz web
 # - datetime: Para obtener la fecha y hora actuales
 # - numpy: Para realizar cálculos matemáticos
+import time
 import streamlit as st
 from datetime import datetime
 
@@ -33,6 +34,7 @@ auth = init_auth()
 
 # Autenticar al usuario
 auth.silence_login()
+time.sleep(2)
 
 # Si el usuario no está autenticado, mostrar el menú sin autenticación
 if (
