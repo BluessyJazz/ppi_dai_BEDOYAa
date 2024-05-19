@@ -320,8 +320,8 @@ class Authenticate:
                     if self.authentication_handler.check_credentials(username,
                                                                      password):
                         self.authentication_handler.execute_login(
-                                                    identifier=username
-                                                    )
+                                                            username=username
+                                                            )
                         self.cookie_handler.set_cookie()
 
                 name = st.session_state['name']
