@@ -26,11 +26,12 @@ st.set_page_config(
 # Inicializar la autenticación
 auth = init_auth()
 
-if auth:
-    st.title("INICIALIZADA")
+nombre, status, username = auth.silence_login()
 
-auth.silence_login()
-# auth.login()
+if nombre:
+    # auth.login()
+    st.title("SESION")
+    st.session_state
 
 # Pestañas de la página
 tab1, tab2 = st.tabs(["Inicio", "Acerca de 🧔🏻"])
