@@ -31,6 +31,7 @@ sesion = auth.silence_login()
 if sesion:
     # auth.login()
     st.title("SESION")
+    st.write(sesion)
     st.session_state
 
 # Pestañas de la página
