@@ -26,7 +26,7 @@ st.set_page_config(
 # Inicializar la autenticación
 auth = init_auth()
 
-sesion = auth.login()
+sesion = auth.silence_login()
 
 if sesion:
     # auth.login()
