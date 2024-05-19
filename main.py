@@ -29,7 +29,8 @@ tab1, tab2 = st.tabs(["Inicio", "Acerca de 🧔🏻"])
 # Inicializar la autenticación
 auth = init_auth()
 
-auth.silence_login()
+# auth.silence_login()
+auth.login()
 
 if (
     'authentication_status' not in st.session_state or
@@ -54,7 +55,6 @@ else:
 # Contenido de la pestaña de inicio
 with tab1:
     st.session_state
-    st.write(auth)
     st.markdown(
         """
         # Bienvenido a Wily MotoTrack! 👋
