@@ -100,36 +100,21 @@ st.write(f"Fecha: {fecha_formateada}")
 descripcion = st.text_area("Descripción")
 
 if st.button("Registrar actividad"):
-    # Mostrar mensaje de verificación
-    st.write("Registro a guardar:")
-    st.write(f"Tipo de actividad: {tipo}")
-    st.write(f"Actividad: {actividad}")
-    st.write(f"Monto: {monto}")
-    st.write(f"Fecha: {fecha_formateada}")
 
-    # Establecer una variable de estado de sesión para rastrear si el botón
-    # "Registrar actividad" ha sido presionado
-    st.session_state['registrar_actividad_presionado'] = True
+    user_id = st.session_state.get("user_id")
 
-# Si el botón "Registrar actividad" ha sido presionado, mostrar el botón
-# "Confirmar"
-if st.session_state.get('registrar_actividad_presionado', False):
-    if st.button("Confirmar"):
+    # Insertar la actividad en la base de datos
+    db.insertar_registro_financiero(actividad, tipo, monto,
+                                    descripcion, fecha_hora, user_id)
 
-        user_id = st.session_state.get("user_id")
+    # Mostrar mensaje de confirmación
+    st.success("Actividad registrada correctamente.")
 
-        # Insertar la actividad en la base de datos
-        db.insertar_registro_financiero(actividad, tipo, monto,
-                                        descripcion, fecha_hora, user_id)
+    # Reiniciar la variable de estado de sesión
+    st.session_state['registrar_actividad_presionado'] = False
 
-        # Mostrar mensaje de confirmación
-        st.success("Actividad registrada correctamente.")
-
-        # Reiniciar la variable de estado de sesión
-        st.session_state['registrar_actividad_presionado'] = False
-
-        # Reiniciar los campos del formulario
-        st.switch_page("/registrar_actividad.py")
+    # Reiniciar los campos del formulario
+    st.switch_page("/registrar_actividad.py")
 
 st.markdown(
     """
