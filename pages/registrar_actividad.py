@@ -124,7 +124,7 @@ if st.button("Registrar actividad"):
     st.session_state['hora'] = None
 
     # Reiniciar los campos del formulario
-    st.switch_page("/registrar_actividad")
+    st.switch_page("pages/registrar_actividad.py")
 
 st.markdown(
     """
