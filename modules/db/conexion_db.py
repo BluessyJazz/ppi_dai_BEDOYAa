@@ -61,8 +61,8 @@ class ConexionDB:
         cursor = conn.cursor()
 
         # Ejecuta la consulta SQL para obtener los usuarios y sus credenciales
-        cursor.execute("SELECT usuario, correo, logged_in, nombre, contrasena "
-                       "FROM usuarios")
+        cursor.execute("SELECT usuario, correo, logged_in, nombre, contrasena,"
+                       " id FROM usuarios")
 
         # Obtiene todos los registros
         registros = cursor.fetchall()
@@ -79,10 +79,43 @@ class ConexionDB:
                 'email': registro[1],
                 'logged_in': registro[2],
                 'name': registro[3],
-                'password': registro[4]
+                'password': registro[4],
+                'id': registro[5]
             }
 
         return usuarios
+
+    def actualizar_estado_login(self, username, logged_in):
+        """
+        Actualiza el estado de inicio de sesión de un usuario en la base
+        de datos.
+
+        Args:
+            username (str): El nombre de usuario del usuario.
+            logged_in (bool): El estado de inicio de sesión del usuario.
+
+        Returns:
+            None
+        """
+
+        # Conectar a la base de datos
+        conn = self.conectar()
+
+        # Crear un cursor
+        cursor = conn.cursor()
+
+        # Actualizar el estado de inicio de sesión del usuario en la
+        # base de datos
+        cursor.execute(
+            "UPDATE usuarios SET logged_in = %s WHERE usuario = %s",
+            (logged_in, username)
+        )
+
+        # Guardar los cambios
+        conn.commit()
+
+        # Cerrar el cursor
+        self.cerrar()
 
     def insertar_usuario(self, email, username, name, password):
         """
@@ -105,15 +138,48 @@ class ConexionDB:
         cursor = conn.cursor()
 
         # Insertar el nuevo usuario en la base de datos
-        cursor.execute('''
-            INSERT INTO usuarios (correo, usuario, nombre, contrasena)
-            VALUES (%s, %s, %s, %s)
-        ''', (email, username, name, password))
+        cursor.execute(
+            "INSERT INTO usuarios (correo, usuario, nombre, contrasena)"
+            "VALUES (%s, %s, %s, %s)", (email, username, name, password))
 
         # Guardar los cambios
         conn.commit()
 
         # Cerrar el cursor
+        self.cerrar()
+
+    def insertar_registro_financiero(self, actividad, tipo, monto,
+                                     descripcion, fecha, user_id):
+        """
+        Inserta un nuevo registro financiero en la base de datos.
+
+        Args:
+            user_id (int): El ID del usuario.
+            tipo (str): El tipo de transacción (gasto o ingreso).
+            monto (float): El monto de la transacción.
+            descripcion (str, optional): La descripción de la transacción.
+
+        Returns:
+            None
+        """
+        # Conectar a la base de datos
+        conn = self.conectar()
+
+        # Crear un cursor
+        cursor = conn.cursor()
+
+        # Insertar el nuevo registro financiero en la base de datos
+        cursor.execute(
+            "INSERT INTO registros_financieros "
+            "(actividad, tipo, monto, descripcion, fecha, user_id) "
+            "VALUES (%s, %s, %s, %s, %s, %s)",
+            (actividad, tipo, monto, descripcion, fecha, user_id)
+        )
+
+        # Guardar los cambios
+        conn.commit()
+
+        # Cerrar el cursor y la conexión
         self.cerrar()
 
     def cerrar(self):
