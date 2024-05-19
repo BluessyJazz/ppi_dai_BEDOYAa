@@ -121,6 +121,7 @@ if st.button("Registrar actividad"):
 
     # Reiniciar la variable de estado de sesión
     st.session_state['registrar_actividad_presionado'] = False
+    st.session_state['hora'] = None
 
     # Reiniciar los campos del formulario
     st.switch_page("/registrar_actividad")
