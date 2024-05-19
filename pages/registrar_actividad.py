@@ -77,14 +77,25 @@ fecha = fecha_hora_actual.date()
 hora = fecha_hora_actual.time()
 
 # Ahora puedes usar fecha y hora en tus widgets de Streamlit
-fecha = st.date_input("Fecha", fecha)
+fecha = st.date_input("Fecha", fecha, format="DD/MM/AAAA")
 hora = st.time_input("Hora", hora)
 
 # Combinar la fecha y la hora en un solo objeto datetime
 fecha_hora = datetime.combine(fecha, hora)
 
-# Formatear la hora
-fecha_hora = fecha_hora.strftime("%d %Y-%m-%d %H:%M:%S")
+# Formatear la fecha
+meses = [
+    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+    ]
+
+fecha_formateada = (
+                    f"{fecha_hora.day} de {meses[fecha_hora.month - 1]} "
+                    f"del {fecha_hora.year}"
+)
+
+# Ahora puedes usar fecha_formateada en tus widgets de Streamlit
+st.write(f"Fecha: {fecha_formateada}")
 
 descripcion = st.text_area("Descripción")
 
@@ -94,7 +105,7 @@ if st.button("Registrar actividad"):
     st.write(f"Tipo de actividad: {tipo}")
     st.write(f"Actividad: {actividad}")
     st.write(f"Monto: {monto}")
-    st.write(f"Fecha: {fecha_hora}")
+    st.write(f"Fecha: {fecha_formateada}")
 
     # Establecer una variable de estado de sesión para rastrear si el botón
     # "Registrar actividad" ha sido presionado
