@@ -59,7 +59,7 @@ if email_of_registered_user:
                                  name_of_registered_user,
                                  password_of_registered_user)
     st.success("Ya tienes tu cuenta en la app! 👏🎉")
-    st.write(f"Inicia sesión como \
+    st.write(f"[Inicia sesión](/iniciar_sesion) como \
              {username_of_registered_user} para comenzar a usar la app.")
 
     time.sleep(5)
