@@ -73,6 +73,8 @@ class AuthenticationHandler:
             st.session_state['username'] = None
         if 'logout' not in st.session_state:
             st.session_state['logout'] = None
+        if 'user_id' not in st.session_state:
+            st.session_state['user_id'] = None
 
     def check_credentials(self, identifier: str, password: str) -> bool:
         """
@@ -157,6 +159,8 @@ class AuthenticationHandler:
                 st.session_state['name'] = name
                 st.session_state['authentication_status'] = True
                 self.credentials['usernames'][username]['logged_in'] = True
+                user_id = self.credentials['usernames'][username]['id']
+                st.session_state['user_id'] = user_id
 
         if token:
             st.session_state['username'] = token['username']
@@ -165,6 +169,8 @@ class AuthenticationHandler:
             st.session_state['authentication_status'] = True
             username = token['username']
             self.credentials['usernames'][username]['logged_in'] = True
+            user_id = self.credentials['usernames'][username]['id']
+            st.session_state['user_id'] = user_id
 
     def execute_logout(self):
         """
@@ -177,6 +183,9 @@ class AuthenticationHandler:
         st.session_state['name'] = None
         st.session_state['username'] = None
         st.session_state['authentication_status'] = None
+        st.session_state['user_id'] = None
+
+        return username
 
     def forgot_password(self, username: str) -> tuple:
         """
@@ -218,6 +227,23 @@ class AuthenticationHandler:
         if not self.validator.validate_length(email, 1):
             raise ForgotError('Email not provided')
         return self._get_username('email', email), email
+
+    def get_user_details(self, username: str) -> tuple:
+        """
+        Retrieves the user's name and email.
+
+        Parameters
+        ----------
+        username: str
+            Username of the user.
+
+        Returns
+        -------
+        tuple
+            Name of the user; email of the user.
+        """
+        return self.credentials['usernames'][username]['name'], \
+            self.credentials['usernames'][username]['email']
 
     def _get_username(self, key: str, value: str) -> str:
         """

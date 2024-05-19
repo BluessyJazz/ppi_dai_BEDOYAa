@@ -3,9 +3,9 @@ Este módulo contiene la lógica para la autenticación de usuarios.
 """
 
 import yaml
-from .authenticate import Authenticate
-from modules.db.conexion_db import ConexionDB
 from yaml.loader import SafeLoader
+from modules.db import ConexionDB
+from .authenticate import Authenticate
 
 
 def init_auth():

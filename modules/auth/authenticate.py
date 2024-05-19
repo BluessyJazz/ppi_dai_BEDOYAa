@@ -13,7 +13,7 @@ import time
 from typing import Optional
 import streamlit as st
 
-
+from ..db import ConexionDB
 from ..utilities.validator import Validator
 from .cookie import CookieHandler
 from .authentication import AuthenticationHandler
@@ -60,10 +60,24 @@ class Authenticate:
                                             cookie_key,
                                             cookie_expiry_days)
 
+        # Inicializar una instancia de la clase ConexionDB
+        self.db = ConexionDB()
+
         if validator is not None:
             self.validator = validator
         else:
             self.validator = Validator()
+
+    def get_username(self) -> str:
+        """
+        Returns the username of the authenticated user.
+
+        Returns
+        -------
+        str
+            Username of the authenticated user.
+        """
+        return st.session_state['username']
 
     def forgot_password(self, location: str = 'main', fields: dict = None,
                         clear_on_submit: bool = False) -> tuple:
@@ -193,6 +207,30 @@ class Authenticate:
 
         return None, email
 
+    def silence_login(self) -> tuple:
+        """
+        Silently logs in the user using the re-authentication cookie.
+
+        Returns
+        -------
+        str
+            Name of the authenticated user.
+        bool
+            Status of authentication, None: no credentials entered,
+            False: incorrect credentials, True: correct credentials.
+        str
+            Username of the authenticated user.
+        """
+
+        token = self.cookie_handler.get_cookie()
+        if token:
+            self.authentication_handler.execute_login(token=token)
+        time.sleep(0.7)
+
+        return (st.session_state['name'],
+                st.session_state['authentication_status'],
+                st.session_state['username'])
+
     def login(self, location: str = 'main',
               fields: dict = None,
               clear_on_submit: bool = False) -> tuple:
@@ -314,14 +352,25 @@ class Authenticate:
                              'unrendered'")
         if location == 'main':
             if st.button(button_name, key):
+                # Actualizar el estado de inicio de sesión en la base de datos
+                self.db.actualizar_estado_login(st.session_state['username'],
+                                                False)
                 self.authentication_handler.execute_logout()
                 self.cookie_handler.delete_cookie()
+
         elif location == 'sidebar':
             if st.sidebar.button(button_name, key):
+                # Actualizar el estado de inicio de sesión en la base de datos
+                self.db.actualizar_estado_login(st.session_state['username'],
+                                                False)
                 self.authentication_handler.execute_logout()
                 self.cookie_handler.delete_cookie()
+
         elif location == 'unrendered':
             if st.session_state['authentication_status']:
+                # Actualizar el estado de inicio de sesión en la base de datos
+                self.db.actualizar_estado_login(st.session_state['username'],
+                                                False)
                 self.authentication_handler.execute_logout()
                 self.cookie_handler.delete_cookie()
 
