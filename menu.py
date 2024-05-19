@@ -1,7 +1,7 @@
 import streamlit as st
 from typing import Optional
 
-from modules.auth.authenticate import Authenticate
+from .modules.auth.authenticate import Authenticate
 
 
 def authenticated_menu(auth):
