@@ -228,9 +228,7 @@ class Authenticate:
                 self.authentication_handler.execute_login(token=token)
             time.sleep(0.7)
 
-            return (st.session_state['name'],
-                    st.session_state['authentication_status'],
-                    st.session_state['username'])
+            return True
 
     def login(self, location: str = 'main',
               fields: dict = None,

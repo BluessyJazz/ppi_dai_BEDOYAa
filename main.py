@@ -26,9 +26,9 @@ st.set_page_config(
 # Inicializar la autenticación
 auth = init_auth()
 
-nombre, status, username = auth.silence_login()
+sesion = auth.silence_login()
 
-if nombre:
+if sesion:
     # auth.login()
     st.title("SESION")
     st.session_state
