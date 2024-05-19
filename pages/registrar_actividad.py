@@ -82,7 +82,10 @@ if 'hora' not in st.session_state:
 
 # Ahora puedes usar fecha y hora en tus widgets de Streamlit
 fecha = st.date_input("Fecha", fecha, format="DD/MM/YYYY")
-st.session_state['hora'] = st.time_input("Hora", st.session_state['hora'])
+hora = st.time_input("Hora", st.session_state['hora'])
+
+if hora:
+    st.session_state['hora'] = hora
 
 # Combinar la fecha y la hora en un solo objeto datetime
 fecha_hora = datetime.combine(fecha, st.session_state['hora'])
