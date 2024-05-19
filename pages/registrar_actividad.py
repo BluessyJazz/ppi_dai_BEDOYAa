@@ -89,7 +89,7 @@ if st.button("Registrar actividad"):
     st.write(f"Tipo de actividad: {tipo}")
     st.write(f"Actividad: {actividad}")
     st.write(f"Monto: {monto}")
-    st.write(f"Fecha: {fecha}")
+    st.write(f"Fecha: {fecha_hora}")
 
     # Establecer una variable de estado de sesión para rastrear si el botón
     # "Registrar actividad" ha sido presionado
@@ -104,7 +104,7 @@ if st.session_state.get('registrar_actividad_presionado', False):
 
         # Insertar la actividad en la base de datos
         db.insertar_registro_financiero(actividad, tipo, monto,
-                                        descripcion, fecha, user_id)
+                                        descripcion, fecha_hora, user_id)
 
         # Mostrar mensaje de confirmación
         st.success("Actividad registrada correctamente.")

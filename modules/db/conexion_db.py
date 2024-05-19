@@ -168,16 +168,6 @@ class ConexionDB:
         # Crear un cursor
         cursor = conn.cursor()
 
-        import pytz
-        from datetime import datetime
-
-        def obtener_hora_colombiana():
-            zona_horaria_colombia = pytz.timezone('America/Bogota')
-            hora_actual_utc = datetime.now(pytz.utc)
-            return hora_actual_utc.astimezone(zona_horaria_colombia)
-
-        fecha = obtener_hora_colombiana()
-
         # Insertar el nuevo registro financiero en la base de datos
         cursor.execute(
             "INSERT INTO registros_financieros "
