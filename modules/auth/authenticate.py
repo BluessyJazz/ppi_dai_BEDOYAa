@@ -222,14 +222,15 @@ class Authenticate:
             Username of the authenticated user.
         """
 
-        token = self.cookie_handler.get_cookie()
-        if token:
-            self.authentication_handler.execute_login(token=token)
-        time.sleep(0.7)
+        if not st.session_state['authentication_status']:
+            token = self.cookie_handler.get_cookie()
+            if token:
+                self.authentication_handler.execute_login(token=token)
+            time.sleep(0.7)
 
-        return (st.session_state['name'],
-                st.session_state['authentication_status'],
-                st.session_state['username'])
+            return (st.session_state['name'],
+                    st.session_state['authentication_status'],
+                    st.session_state['username'])
 
     def login(self, location: str = 'main',
               fields: dict = None,

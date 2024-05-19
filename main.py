@@ -29,8 +29,8 @@ tab1, tab2 = st.tabs(["Inicio", "Acerca de 🧔🏻"])
 # Inicializar la autenticación
 auth = init_auth()
 
-# auth.silence_login()
-auth.login()
+auth.silence_login()
+# auth.login()
 
 if (
     'authentication_status' not in st.session_state or
