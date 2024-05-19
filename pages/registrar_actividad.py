@@ -81,6 +81,9 @@ hora = st.time_input("Hora", hora)
 # Combinar la fecha y la hora en un solo objeto datetime
 fecha_hora = datetime.combine(fecha, hora)
 
+# Formatear la hora
+fecha_hora = fecha_hora.strftime("%d %Y-%m-%d %H:%M:%S")
+
 descripcion = st.text_area("Descripción")
 
 if st.button("Registrar actividad"):
@@ -113,7 +116,7 @@ if st.session_state.get('registrar_actividad_presionado', False):
         st.session_state['registrar_actividad_presionado'] = False
 
         # Reiniciar los campos del formulario
-        st.rerun()
+        st.switch_page("/registrar_actividad.py")
 
 st.markdown(
     """
