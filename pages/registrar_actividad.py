@@ -77,7 +77,7 @@ fecha = fecha_hora_actual.date()
 hora = fecha_hora_actual.time()
 
 # Ahora puedes usar fecha y hora en tus widgets de Streamlit
-fecha = st.date_input("Fecha", fecha, format="DD/MM/AAAA")
+fecha = st.date_input("Fecha", fecha, format="DD/MM/YYYY")
 hora = st.time_input("Hora", hora)
 
 # Combinar la fecha y la hora en un solo objeto datetime
