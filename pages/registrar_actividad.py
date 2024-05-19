@@ -79,7 +79,7 @@ fecha = fecha_hora_actual.date()
 hora_placeholder = st.empty()
 
 # Si la hora no ha sido seleccionada, usar la hora actual
-if 'hora' not in st.session_state:
+if 'hora' not in st.session_state or st.session_state['hora'] is None:
     st.session_state['hora'] = fecha_hora_actual.time()
 
 # Ahora puedes usar fecha y hora en tus widgets de Streamlit
