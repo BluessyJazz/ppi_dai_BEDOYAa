@@ -51,6 +51,8 @@ if (
 else:
     menu(auth)
 
+st.session_state
+
 
 # Contenido de la pestaña de inicio
 with tab1:
