@@ -31,6 +31,9 @@ auth = init_auth()
 
 sesion = auth.silence_login()
 
+if sesion:
+    st.write("# Sesión iniciada")
+
 st.session_state
 
 if (
