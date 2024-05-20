@@ -43,5 +43,5 @@ elif st.session_state["authentication_status"] is True:
 
 st.markdown("""
             Si no tienes una cuenta, puedes
-            [registrarte](/registrarse).
+            [registrarte](/registro).
             """)

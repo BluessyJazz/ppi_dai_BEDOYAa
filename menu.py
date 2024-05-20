@@ -48,7 +48,7 @@ def unauthenticated_menu():
 
     # Mostrar las opciones de navegación para los usuarios no autenticados
     st.sidebar.page_link("pages/iniciar_sesion.py", label="Iniciar sesión 🔐")
-    st.sidebar.page_link("pages/registrarse.py", label="Registrarse 📝")
+    st.sidebar.page_link("pages/registro.py", label="Registrarse 📝")
 
 
 def menu(auth: Optional[Authenticate] = None):
