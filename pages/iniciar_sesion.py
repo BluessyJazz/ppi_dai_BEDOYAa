@@ -26,7 +26,10 @@ auth = init_auth()
 # Establecer conexión con la base de datos
 conexion_db = ConexionDB()
 
-auth.login()
+try:
+    auth.login()
+except LoginError as e:
+    st.error(e)
 
 if st.session_state["authentication_status"] is False:
     st.error('Username/password is incorrect')

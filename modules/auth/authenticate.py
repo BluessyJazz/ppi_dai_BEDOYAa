@@ -228,6 +228,23 @@ class Authenticate:
                 self.authentication_handler.execute_login(token=token)
             time.sleep(0.7)
 
+    def login_with_cookie(self):
+        """
+        Intenta iniciar sesión con una cookie.
+
+        Returns
+        -------
+        bool
+            True si el inicio de sesión fue exitoso, False en caso contrario.
+        """
+        token = self.cookie_handler.get_cookie()
+        if token:
+            self.authentication_handler.execute_login(token=token)
+            time.sleep(0.7)
+            if st.session_state['authentication_status']:
+                return True
+        return False
+
     def login(self, location: str = 'main',
               fields: dict = None,
               clear_on_submit: bool = False) -> tuple:
