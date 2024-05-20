@@ -1,4 +1,4 @@
 cookie:
   expiry_days: 30
   key: cookie_key
-  name: wilymototrack_session
+  name: wilymototrack_session_cookie
