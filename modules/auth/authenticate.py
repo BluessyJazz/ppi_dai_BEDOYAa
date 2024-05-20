@@ -207,27 +207,6 @@ class Authenticate:
 
         return None, email
 
-    def silence_login(self) -> tuple:
-        """
-        Silently logs in the user using the re-authentication cookie.
-
-        Returns
-        -------
-        str
-            Name of the authenticated user.
-        bool
-            Status of authentication, None: no credentials entered,
-            False: incorrect credentials, True: correct credentials.
-        str
-            Username of the authenticated user.
-        """
-
-        if not st.session_state['authentication_status']:
-            token = self.cookie_handler.get_cookie()
-            if token:
-                self.authentication_handler.execute_login(token=token)
-            time.sleep(0.7)
-
     def login_with_cookie(self):
         """
         Intenta iniciar sesión con una cookie.
