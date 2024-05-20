@@ -29,9 +29,7 @@ tab1, tab2 = st.tabs(["Inicio", "Acerca de 🧔🏻"])
 # Inicializar la autenticación
 auth = init_auth()
 
-sesion = auth.silence_login()
-
-st.title(sesion)
+auth.login()
 
 st.session_state
 
