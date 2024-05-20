@@ -31,6 +31,8 @@ auth = init_auth()
 
 sesion = auth.silence_login()
 
+st.session_state
+
 if (
     'authentication_status' not in st.session_state or
     not st.session_state['authentication_status']
