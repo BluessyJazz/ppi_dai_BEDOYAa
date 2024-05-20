@@ -241,9 +241,12 @@ class Authenticate:
         if token:
             self.authentication_handler.execute_login(token=token)
             time.sleep(0.7)
-            if st.session_state['authentication_status']:
-                return True
-        return False
+
+        name = st.session_state['name']
+        authentication_status = st.session_state['authentication_status']
+        username = st.session_state['username']
+
+        return name, authentication_status, username
 
     def login(self, location: str = 'main',
               fields: dict = None,
@@ -338,13 +341,11 @@ class Authenticate:
                                                             )
                         self.cookie_handler.set_cookie()
 
-                name = st.session_state['name']
-                authentication_status = st.session_state[
-                                                        'authentication_status'
-                                                        ]
-                username = st.session_state['username']
+        name = st.session_state['name']
+        authentication_status = st.session_state['authentication_status']
+        username = st.session_state['username']
 
-                return name, authentication_status, username
+        return name, authentication_status, username
 
     def logout(self, button_name: str = 'Cerrar sesión',
                location: str = 'main',
