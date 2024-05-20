@@ -39,7 +39,7 @@ elif st.session_state["authentication_status"] is True:
     st.success('You are now logged in!')
     conexion_db.actualizar_estado_login(st.session_state["username"], True)
     menu(auth=auth)
-    # st.switch_page("main.py")
+    st.switch_page("main.py")
 
 st.markdown("""
             Si no tienes una cuenta, puedes
