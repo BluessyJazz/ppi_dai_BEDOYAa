@@ -228,8 +228,6 @@ class Authenticate:
                 self.authentication_handler.execute_login(token=token)
             time.sleep(0.7)
 
-            return token
-
     def login(self, location: str = 'main',
               fields: dict = None,
               clear_on_submit: bool = False) -> tuple:
