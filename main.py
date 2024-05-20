@@ -31,8 +31,6 @@ auth = init_auth()
 
 auth.login_with_cookie()
 
-st.session_state
-
 if (
     'authentication_status' not in st.session_state or
     not st.session_state['authentication_status']
