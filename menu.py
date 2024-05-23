@@ -19,8 +19,11 @@ def authenticated_menu(auth):
         None
     """
     # Mostrar las páginas disponibles para los usuarios autenticados
-    st.sidebar.page_link("pages/registrar_actividad.py",
-                         label="Registrar actividad :moneybag:")
+    st.sidebar.page_link("pages/registro_actividad.py",
+                         label="Registro actividad :moneybag:")
+    st.sidebar.page_link("pages/datos.py", label="Datos :bar_chart:")
+    st.sidebar.page_link("pages/datos_google.py",
+                         label="Datos Google :bar_chart:")
     # st.sidebar.page_link("pages/prueba.py", label="Manage users")
     # st.sidebar.page_link(
     #    "pages/autentica2.py",
