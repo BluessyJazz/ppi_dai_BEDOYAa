@@ -2,8 +2,7 @@
 Este módulo contiene la lógica para la autenticación de usuarios.
 """
 
-import yaml
-from yaml.loader import SafeLoader
+import streamlit as st
 from modules.db import ConexionDB
 from .authenticate import Authenticate
 
@@ -19,16 +18,12 @@ def init_auth():
     # Obtener los usuarios y sus credenciales
     usuarios = conexion_db.obtener_usuarios()
 
-    # Cargar el archivo de configuración
-    with open("config.yaml", "r", encoding='utf-8') as file:
-        config = yaml.load(file, Loader=SafeLoader)
-
     # Crear una instancia de la clase Authenticate
     auth = Authenticate(
         usuarios,
-        config['cookie']['name'],
-        config['cookie']['key'],
-        config['cookie']['expiry_days']
+        st.secrets['cookie']['name'],
+        st.secrets['cookie']['key'],
+        st.secrets['cookie']['expiry_days']
     )
 
     return auth
