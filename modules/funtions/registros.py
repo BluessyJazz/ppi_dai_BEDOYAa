@@ -79,6 +79,6 @@ def visualizar_estadisticas():
         st.write(f"Desviación Estándar: {desviacion_ingresos:.2f}")
     else:
         st.warning("No hay datos disponibles para mostrar las estadísticas.")
-    
+
     # Cerrar la conexión a la base de datos
     db.cerrar()
