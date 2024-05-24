@@ -83,6 +83,7 @@ streamlit-embedcode==0.1.2
 streamlit-faker==0.0.3
 streamlit-geolocation==0.0.10
 streamlit-image-coordinates==0.1.6
+streamlit-js-eval==0.1.7
 streamlit-keyup==0.2.4
 streamlit-option-menu==0.3.12
 streamlit-toggle-switch==1.0.2
