@@ -3,6 +3,29 @@ import streamlit as st
 import pandas as pd
 from streamlit_geolocation import streamlit_geolocation
 
+from menu import menu
+from modules.auth import init_auth
+
+# Inicializar la autenticación
+auth = init_auth()
+
+# Autenticar al usuario
+if auth.login_with_cookie():
+    pass
+
+# Si el usuario no está autenticado, mostrar el menú sin autenticación
+if (
+    "authentication_status" not in st.session_state
+    or not st.session_state["authentication_status"]
+):
+    st.write("Por favor inicia sesión para ver esta página.")
+    menu(auth=None)
+    st.stop()
+
+# Si el usuario está autenticado, mostrar el menú
+else:
+    menu(auth)
+
 # Tu clave de API de Google
 API_KEY = "AIzaSyBCx7Qq2RwPNx7bjKFB--qsuoV8RmSr_QI"
 
@@ -51,6 +74,7 @@ def main():
             st.dataframe(df)
         else:
             st.write("No se encontraron gasolineras.")
+
 
 if __name__ == "__main__":
     main()
