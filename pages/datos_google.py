@@ -6,6 +6,8 @@ from streamlit_geolocation import streamlit_geolocation
 from menu import menu
 from modules.auth import init_auth
 
+location = streamlit_geolocation()
+
 # Inicializar la autenticación
 auth = init_auth()
 
@@ -45,7 +47,7 @@ st.title("Gasolineras cerca de una ubicación")
 
 st.write(f"Presiona el botón para usar tu ubicación:")
 
-location = streamlit_geolocation()
+
 
 if location is not None:
     st.success(f"Ubicación actual: {location}")
