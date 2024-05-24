@@ -1,12 +1,11 @@
 import requests
 import streamlit as st
 import pandas as pd
-from streamlit_geolocation import streamlit_geolocation
+from streamlit_js_eval import get_geolocation
 
 from menu import menu
 from modules.auth import init_auth
 
-location = streamlit_geolocation()
 
 # Inicializar la autenticación
 auth = init_auth()
@@ -47,30 +46,36 @@ st.title("Gasolineras cerca de una ubicación")
 
 st.write(f"Presiona el botón para usar tu ubicación:")
 
+location = None
 
+if st.checkbox("Usar mi ubicación"):
+    location = get_geolocation()
 
-if location is not None:
+if location:
     st.success(f"Ubicación actual: {location}")
 
-location = f"{location['latitude']},{location['longitude']}"
+    coords = location['coords']
 
-# if streamlit_geolocation() is not None:
+    location = f"{coords['latitude']},{coords['longitude']}"
+
+    # if streamlit_geolocation() is not None:
     # Entrada de texto para la ubicación (latitud y longitud)
-#    location = st.text_input("Introduce la ubicación (latitud,longitud)", "6.2442,-75.5812")
-# else:
-#    location
-radius = st.slider("Radio de búsqueda (metros)", min_value=1000, max_value=50000, step=1000, value=5000)
+    #    location = st.text_input("Introduce la ubicación (latitud,longitud)",
+    # "6.2442,-75.5812")
+    # else:
+    #    location
+    radius = st.slider("Radio de búsqueda (metros)", min_value=1000, max_value=50000, step=1000, value=5000)
 
-# Botón para buscar gasolineras
-if st.button("Buscar Gasolineras"):
-    gas_stations = fetch_gas_stations(location, radius)
-    if gas_stations:
-        # Crear un DataFrame con los resultados
-        df = pd.DataFrame(gas_stations)
-        # Filtrar y seleccionar solo las columnas necesarias
-        df_filtered = df[['name', 'vicinity', 'rating', 'user_ratings_total']]
-        st.write("Gasolineras encontradas")
-        st.dataframe(df_filtered)
-        st.dataframe(df)
-    else:
-        st.write("No se encontraron gasolineras.")
+    # Botón para buscar gasolineras
+    if st.button("Buscar Gasolineras"):
+        gas_stations = fetch_gas_stations(location, radius)
+        if gas_stations:
+            # Crear un DataFrame con los resultados
+            df = pd.DataFrame(gas_stations)
+            # Filtrar y seleccionar solo las columnas necesarias
+            df_filtered = df[['name', 'vicinity', 'rating', 'user_ratings_total']]
+            st.write("Gasolineras encontradas")
+            st.dataframe(df_filtered)
+            st.dataframe(df)
+        else:
+            st.write("No se encontraron gasolineras.")
