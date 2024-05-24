@@ -21,7 +21,10 @@ def authenticated_menu(auth):
     # Mostrar las páginas disponibles para los usuarios autenticados
     st.sidebar.page_link("pages/registro_actividad.py",
                          label="Registro actividad :moneybag:")
-    st.sidebar.page_link("pages/datos.py", label="Datos :bar_chart:")
+    st.sidebar.page_link("pages/mis_registros.py",
+                         label="Mis registros :chart_with_upwards_trend:")
+    st.sidebar.page_link("pages/analisis_registros.py",
+                         label="Análisis registros :bar_chart:")
     st.sidebar.page_link("pages/datos_google.py",
                          label="Datos Google :bar_chart:")
     # st.sidebar.page_link("pages/prueba.py", label="Manage users")

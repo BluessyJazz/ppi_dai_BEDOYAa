@@ -85,6 +85,100 @@ class ConexionDB:
 
         return usuarios
 
+    def obtener_registro_financiero(self, user_id):
+        """
+        Obtiene los registros financieros de un usuario de la base de datos.
+
+        Args:
+            user_id (int): El ID del usuario.
+
+        Returns:
+            list: Una lista de tuplas con los registros financieros.
+        """
+        # Conectar a la base de datos
+        conn = self.conectar()
+
+        # Crear un cursor
+        cursor = conn.cursor()
+
+        # Consultar los registros financieros del usuario
+        cursor.execute(
+            "SELECT id, actividad, tipo, monto, descripcion, fecha "
+            "FROM registros_financieros "
+            "WHERE user_id = %s", (user_id,))
+
+        # Obtener todos los registros
+        registros = cursor.fetchall()
+
+        # Cerrar la conexión
+        self.cerrar()
+
+        return registros
+
+    def modificar_registro_financiero(self, user_id, actividad, tipo, monto, descripcion, fecha_hora, registro):
+        """
+        Modifica un registro financiero existente.
+
+        Args:
+            user_id (int): El ID del usuario.
+            actividad (str): La actividad del registro.
+            tipo (str): El tipo de registro (Gasto, Ingreso, etc.).
+            monto (float): El monto del registro.
+            descripcion (str): La descripción del registro.
+            fecha_hora (datetime): La fecha y hora del registro.
+            registro (int): El ID del registro a modificar.
+
+        Returns:
+            None
+        """
+        # Conectar a la base de datos
+        self.conectar()
+
+        # Crear un cursor
+        cursor = self.conn.cursor()
+
+        # Actualizar el registro
+        cursor.execute("""
+            UPDATE registros_financieros
+            SET actividad = %s, tipo = %s, monto = %s, descripcion = %s, fecha = %s
+            WHERE id = %s AND user_id = %s
+        """, (actividad, tipo, monto, descripcion, fecha_hora, registro, user_id))
+
+        # Confirmar los cambios
+        self.conn.commit()
+
+        # Cerrar la conexión
+        self.cerrar()
+
+    def eliminar_registro_financiero(self, user_id, registro):
+        """
+        Elimina un registro financiero existente.
+
+        Args:
+            user_id (int): El ID del usuario.
+            registro (int): El ID del registro a eliminar.
+
+        Returns:
+            None
+        """
+        # Crear una conexión a la base de datos
+        conn = self.conectar()
+
+        # Crear la consulta SQL para eliminar el registro
+        query = """
+        DELETE FROM registros_financieros
+        WHERE user_id = %s AND id = %s
+        """
+        params = (user_id, registro)
+
+        # Ejecutar la consulta SQL
+        cursor = conn.cursor()
+        cursor.execute(query, params)
+        conn.commit()
+
+        # Cerrar la conexión a la base de datos
+        self.cerrar()
+
     def actualizar_estado_login(self, username, logged_in):
         """
         Actualiza el estado de inicio de sesión de un usuario en la base

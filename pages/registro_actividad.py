@@ -87,6 +87,12 @@ def validar_campos():
 def limpiar_campos():
     """
     Limpia los campos de entrada.
+
+    Args:
+        None
+
+    Returns:
+        None
     """
     del st.session_state.actividad
     del st.session_state.tipo
@@ -185,7 +191,7 @@ if st.button("Registrar actividad") and campos_validos:
                                     descripcion, fecha_hora, user_id)
 
     # Mostrar mensaje de confirmación
-    st.success("Actividad registrada correctamente.")           
+    st.success("Actividad registrada correctamente.")
 
     # Limpiar los campos
     limpiar_campos()
