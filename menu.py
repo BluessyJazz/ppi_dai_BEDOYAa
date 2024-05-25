@@ -49,9 +49,7 @@ def authenticated_menu(auth):
         auth.reset_password(username)
 
         # Cerrar sesión
-        cerrar_sesión = auth.logout()
-
-
+        auth.logout()
 
 
 def unauthenticated_menu():
