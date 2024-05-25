@@ -179,6 +179,36 @@ class ConexionDB:
         # Cerrar la conexión a la base de datos
         self.cerrar()
 
+    def actualizar_contrasena(self, username, password):
+        """
+        Actualiza la contraseña de un usuario en la base de datos.
+
+        Args:
+            username (str): El nombre de usuario del usuario.
+            password (str): La nueva contraseña del usuario.
+
+        Returns:
+            None
+        """
+
+        # Conectar a la base de datos
+        conn = self.conectar()
+
+        # Crear un cursor
+        cursor = conn.cursor()
+
+        # Actualizar la contraseña del usuario en la base de datos
+        cursor.execute(
+            "UPDATE usuarios SET contrasena = %s WHERE usuario = %s",
+            (password, username)
+        )
+
+        # Guardar los cambios
+        conn.commit()
+
+        # Cerrar el cursor
+        self.cerrar()
+
     def actualizar_estado_login(self, username, logged_in):
         """
         Actualiza el estado de inicio de sesión de un usuario en la base

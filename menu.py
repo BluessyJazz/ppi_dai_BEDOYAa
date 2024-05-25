@@ -25,8 +25,8 @@ def authenticated_menu(auth):
                          label="Mis registros :ledger:")
     st.sidebar.page_link("pages/analisis_registros.py",
                          label="Análisis registros :bar_chart:")
-    st.sidebar.page_link("pages/datos_google.py",
-                         label="Datos Google :bar_chart:")
+    st.sidebar.page_link("pages/gasolinera_mas_cercana.py",
+                         label="Gasolinera más cercana 🚗")
     # st.sidebar.page_link("pages/prueba.py", label="Manage users")
     # st.sidebar.page_link(
     #    "pages/autentica2.py",
@@ -34,11 +34,24 @@ def authenticated_menu(auth):
     #    disabled=st.session_state.authentication_status != "super-admin",
     # )
 
-    c = st.sidebar.empty()
+    # c = st.sidebar.empty()
 
-    c.write("")
+    # c.write("")
 
-    auth.logout(location='sidebar')
+    # Expander para datos de la sesión
+    with st.sidebar.expander("Mi cuenta"):
+        st.write("")
+        st.write(f"Bienvenido {st.session_state.name}")
+
+        username = st.session_state.username
+
+        # Cambiar contraseña
+        auth.reset_password(username)
+        
+        # Cerrar sesión
+        cerrar_sesión = auth.logout()
+
+
 
 
 def unauthenticated_menu():
@@ -55,6 +68,8 @@ def unauthenticated_menu():
     # Mostrar las opciones de navegación para los usuarios no autenticados
     st.sidebar.page_link("pages/iniciar_sesion.py", label="Iniciar sesión 🔐")
     st.sidebar.page_link("pages/registro.py", label="Registrarse 📝")
+    st.sidebar.page_link("pages/gasolinera_mas_cercana.py",
+                         label="Gasolinera más cercana 🚗")
 
 
 def menu(auth: Optional[Authenticate] = None):

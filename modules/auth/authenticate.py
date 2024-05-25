@@ -566,7 +566,7 @@ class Authenticate:
             Status of resetting the password.
         """
         if fields is None:
-            fields = {'Form name': 'Restablecer contraseña',
+            fields = {'Form name': 'Restablecer contraseña 🔑',
                       'Current password': 'Contraseña actual',
                       'New password': 'Nueva contraseña',
                       'Repeat password': 'Repetir contraseña',
@@ -584,9 +584,6 @@ class Authenticate:
         else:
             form_name = fields['Form name']
         reset_password_form.subheader(form_name)
-
-        # Convertir el nombre de usuario a minúsculas
-        username = username.lower()
 
         # Para el campo de entrada de texto del formulario para
         # la contraseña actual
@@ -624,9 +621,14 @@ class Authenticate:
         else:
             reset_button = fields['Reset']
         if reset_password_form.form_submit_button(reset_button):
-            if self.authentication_handler.reset_password(username, password,
-                                                          new_password,
-                                                          new_password_repeat):
+            hash_password = self.authentication_handler.reset_password(
+                                                        username,
+                                                        password,
+                                                        new_password,
+                                                        new_password_repeat)
+            if hash_password:
+                # Actualizar la constraseña en la base de datos
+                self.db.actualizar_contrasena(username, hash_password)               
                 return True
         return None
 

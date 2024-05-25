@@ -76,7 +76,7 @@ class AuthenticationHandler:
         if 'user_id' not in st.session_state:
             st.session_state['user_id'] = None
 
-    def check_credentials(self, identifier: str, password: str) -> bool:
+    def check_credentials(self, identifier: str, password: str, reset: bool = False) -> bool:
         """
         Checks the validity of the entered credentials.
 
@@ -105,7 +105,9 @@ class AuthenticationHandler:
                     print(e)
                 except ValueError as e:
                     print(e)
-        st.session_state['authentication_status'] = False
+        if reset is False:
+            st.session_state['authentication_status'] = False
+
         return False
 
     def credentials_contains_value(self, value: str) -> bool:
@@ -369,24 +371,25 @@ class AuthenticationHandler:
         bool
             State of resetting the password, True: password reset successfully.
         """
-        if self.check_credentials(username, password):
+        if self.check_credentials(username, password, reset=True):
 
             check_pw = self.validator.validate_password_strength(new_password)
 
             if check_pw != 'ok':
-                raise ResetError(check_pw)
+                st.error(check_pw)
 
             if new_password != new_password_repeat:
-                raise ResetError('Las contraseñas no coinciden')
+                st.error('Las contraseñas no coinciden')
 
             if password != new_password:
-                self._update_password(username, new_password)
-                return True
+                hash_password  = self._update_password(username, new_password)
+                st.success('Contraseña actualizada con éxito')
+                return hash_password
             else:
-                raise ResetError('La nueva contraseña no puede ser igual \
+                st.error('La nueva contraseña no puede ser igual \
                                   a la anterior')
         else:
-            raise CredentialsError('password')
+            st.error('La contraseña actual es incorrecta')
 
     def _set_random_password(self, username: str) -> str:
         """
@@ -436,8 +439,9 @@ class AuthenticationHandler:
         password: str
             Updated plain text password.
         """
-        self.credentials['usernames'][username]['password'] = \
-            Hasher([password]).generate()[0]
+        contraseña = Hasher([password]).generate()[0]
+
+        return contraseña
 
     def update_user_details(self, new_value: str, username: str,
                             field: str) -> bool:
