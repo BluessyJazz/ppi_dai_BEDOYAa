@@ -1,18 +1,20 @@
 """
-Script description: This module renders and invokes the logic for the
-login, logout, register user, reset password, forgot password, forgot username,
-and modify user details widgets.
-
-Libraries imported:
-- time: Module implementing the sleep function.
-- streamlit: Framework used to build pure Python web applications.
-- typing: Module implementing standard typing notations for Python functions.
+Este módulo contiene la lógica para la autenticación de usuarios.
 """
 
+# Importar librerías
+# -time: para pausar la ejecución
+# -typing: para anotaciones de tipos
+# -streamlit: para crear aplicaciones web
 import time
 from typing import Optional
 import streamlit as st
 
+# Importar módulos
+# -db: para interactuar con la base de datos
+# -validator: para validar los campos de registro
+# -cookie: para manejar las cookies
+# -authentication: para manejar la autenticación
 from ..db import ConexionDB
 from ..utilities.validator import Validator
 from .cookie import CookieHandler
@@ -21,38 +23,38 @@ from .authentication import AuthenticationHandler
 
 class Authenticate:
     """
-    This class will create login, logout, register user, reset password,
-    forgot password,
-    forgot username, and modify user details widgets.
+    Esta clase manejará todas las acciones relacionadas con la autenticación
+    de usuarios, incluida la creación de cookies para la re-autenticación sin
+    contraseña.
     """
     def __init__(self, credentials: dict, cookie_name: str, cookie_key: str,
                  cookie_expiry_days: float = 30.0,
                  validator: Optional[Validator] = None):
         """
-        Create a new instance of "Authenticate".
+        Inicializa la clase Authenticate.
 
-        Parameters
-        ----------
-        credentials: dict
-            Dictionary of usernames, names, passwords, emails, and other user
-            data.
-        cookie_name: str
-            Name of the re-authentication cookie stored on the client's
-            browser for password-less
-            re-authentication.
-        cookie_key: str
-            Key to be used to hash the signature of the re-authentication
-            cookie.
-        cookie_expiry_days: float
-            Number of days before the re-authentication cookie automatically
-            expires on the client's
-            browser.
-        pre-authorized: list
-            List of emails of unregistered users who are authorized to
-            register.
-        validator: Validator
-            Validator object that checks the validity of the username, name,
-            and email fields.
+        Args:
+            - credentials: dict
+                Diccionario que contiene los usuarios y sus credenciales.
+
+            - cookie_name: str
+                Nombre de la cookie almacenada en el navegador del cliente para
+                la re-autenticación sin contraseña.
+
+            - cookie_key: str
+                Clave que se utilizará para cifrar la firma de la cookie de
+                re-autenticación.
+
+            - cookie_expiry_days: float
+                Número de días antes de que la cookie de re-autenticación
+                expire automáticamente en el navegador del cliente.
+
+            - validator: Validator
+                Instancia de la clase Validator para validar los campos de
+                registro.
+
+        Returns:
+            None
         """
         self.authentication_handler = AuthenticationHandler(credentials,
                                                             validator)
@@ -70,39 +72,34 @@ class Authenticate:
 
     def get_username(self) -> str:
         """
-        Returns the username of the authenticated user.
+        Devuelve el nombre de usuario del usuario autenticado.
 
-        Returns
-        -------
-        str
-            Username of the authenticated user.
+        Args:
+            None
+
+        Returns:
+            str: Nombre de usuario del usuario autenticado.
         """
         return st.session_state['username']
 
     def forgot_password(self, location: str = 'main', fields: dict = None,
                         clear_on_submit: bool = False) -> tuple:
         """
-        Creates a forgot password widget.
+        Crea un widget para recuperar la contraseña.
 
-        Parameters
-        ----------
-        location: str
-            Location of the forgot password widget i.e. main or sidebar.
-        fields: dict
-            Rendered names of the fields/buttons.
-        clear_on_submit: bool
-            Clear on submit setting, True: clears inputs on submit, False:
-            keeps inputs on submit.
+        Args:
+            location (str): Ubicación del widget de recuperación de contraseña,
+                            'main' o 'sidebar'.
+            fields (dict): Nombres renderizados de los campos/botones.
+            clear_on_submit (bool): Configuración de limpiar al enviar,
+                                    True: limpia los campos al enviar,
+                                    False: mantiene los campos al enviar.
 
-        Returns
-        -------
-        str
-            Username associated with the forgotten password.
-        str
-            Email associated with the forgotten password.
-        str
-            New plain text password that should be transferred to the user
-            securely.
+        Returns:
+            tuple: Nombre de usuario asociado a la contraseña olvidada,
+                   Correo asociado a la contraseña olvidada,
+                   Nueva contraseña en texto plano que debe ser transferida
+                   al usuario de forma segura.
         """
         if fields is None:
             fields = {'Form name': 'Contraseña olvidada',
@@ -149,24 +146,20 @@ class Authenticate:
     def forgot_username(self, location: str = 'main', fields: dict = None,
                         clear_on_submit: bool = False) -> tuple:
         """
-        Creates a forgot username widget.
+        Crea un widget para recuperar el nombre de usuario.
 
-        Parameters
-        ----------
-        location: str
-            Location of the forgot username widget i.e. main or sidebar.
-        fields: dict
-            Rendered names of the fields/buttons.
-        clear_on_submit: bool
-            Clear on submit setting, True: clears inputs on submit, False:
-            keeps inputs on submit.
+        Args:
+            location (str): Ubicación del widget de recuperación de nombre de
+                            usuario, 'main' o 'sidebar'.
+            fields (dict): Nombres renderizados de los campos/botones.
+            clear_on_submit (bool): Configuración de limpiar al enviar,
+                                    True: limpia los campos al enviar,
+                                    False: mantiene los campos al enviar.
 
-        Returns
-        -------
-        str
-            Forgotten username that should be transferred to the user securely.
-        str
-            Email associated with the forgotten username.
+        Returns:
+            tuple: Nombre de usuario olvidado que debe ser transferido al
+                   usuario de forma segura,
+                   Correo asociado al nombre de usuario olvidado.
         """
         if fields is None:
             fields = {'Form name': 'Olvidé mi usuario',
@@ -211,10 +204,12 @@ class Authenticate:
         """
         Intenta iniciar sesión con una cookie.
 
-        Returns
-        -------
-        bool
-            True si el inicio de sesión fue exitoso, False en caso contrario.
+        Args:
+            None
+
+        Returns:
+            bool: True si el inicio de sesión fue exitoso, False en caso
+                  contrario.
         """
         token = self.cookie_handler.get_cookie()
         if token:
@@ -231,27 +226,23 @@ class Authenticate:
               fields: dict = None,
               clear_on_submit: bool = False) -> tuple:
         """
-        Creates a login widget.
+        Crea un widget de inicio de sesión.
 
-        Parameters
-        ----------
-        location: str
-            Location of the login widget i.e. main or sidebar.
-        fields: dict
-            Rendered names of the fields/buttons.
-        clear_on_submit: boo
-            Clear on submit setting, True: clears inputs on submit, False:
-            keeps inputs on submit.
+        Args:
+            location (str): Ubicación del widget de inicio de sesión,
+                            'main' o 'sidebar'.
+            fields (dict): Nombres renderizados de los campos/botones.
+            clear_on_submit (bool): Configuración de limpiar al enviar,
+                                    True: limpia los campos al enviar,
+                                    False: mantiene los campos al enviar.
 
-        Returns
-        -------
-        str
-            Name of the authenticated user.
-        bool
-            Status of authentication, None: no credentials entered,
-            False: incorrect credentials, True: correct credentials.
-        str
-            Username of the authenticated user.
+        Returns:
+            tuple: Nombre del usuario autenticado,
+                   Estado de autenticación, None: no se ingresaron
+                        credenciales,
+                   False: credenciales incorrectas, True: credenciales
+                        correctas,
+                   Nombre de usuario autenticado.
         """
         if fields is None:
             fields = {'Form name': 'Inicio de sesión',
@@ -330,16 +321,18 @@ class Authenticate:
                location: str = 'main',
                key: Optional[str] = None):
         """
-        Creates a logout button.
+        Crea un botón de cierre de sesión.
 
-        Parameters
-        ----------
-        button_name: str
-            Rendered name of the logout button.
-        location: str
-            Location of the logout button i.e. main or sidebar or unrendered.
-        key: str
-            Unique key to be used in multi-page applications.
+        Args:
+            button_name (str): Nombre renderizado del botón de cierre de
+                sesión.
+            location (str): Ubicación del botón de cierre de sesión,
+                            'main', 'sidebar' o 'unrendered'.
+            key (str): Clave única a utilizar en aplicaciones de varias
+                páginas.
+
+        Returns:
+            None
         """
         if location not in ['main', 'sidebar', 'unrendered']:
             raise ValueError("Location debe ser uno de 'main', 'sidebar' o \
@@ -371,34 +364,16 @@ class Authenticate:
     def register_user(self, location: str = 'main',
                       fields: dict = None) -> tuple:
         """
-        Creates a register new user widget.
+        Crea un widget para registrar un nuevo usuario.
 
-        Parameters
-        ----------
-        location: str
-            Location of the register new user widget i.e. main or sidebar.
-        pre-authorization: bool
-            Pre-authorization requirement, True: user must be pre-authorized
-            to register,
-            False: any user can register.
-        domains: list
-            Required list of domains a new email must belong to i.e.
-            ['gmail.com', 'yahoo.com'],
-            list: required list of domains, None: any domain is allowed.
-        fields: dict
-            Rendered names of the fields/buttons.
-        clear_on_submit: bool
-            Clear on submit setting, True: clears inputs on submit, False:
-            keeps inputs on submit.
+        Args:
+        - location (str): Ubicación del widget de registro de nuevo usuario,
+                          'main' o 'sidebar'.
+        - fields (dict): Nombres renderizados de los campos/botones.
 
-        Returns
-        -------
-        str
-            Email associated with the new user.
-        str
-            Username associated with the new user.
-        str
-            Name associated with the new user.
+        Returns:
+        - tuple: Tupla con el correo electrónico, nombre de usuario y nombre
+                 asociados al nuevo usuario.
         """
 
         if 'clear' not in st.session_state:
@@ -511,8 +486,8 @@ class Authenticate:
             st.session_state['accepted'] = False
 
         if st.session_state['accepted'] is False:
-            st.warning('Por favor, lea y acepte la política de \
-                        tratamiento de datos personales para continuar')
+            st.warning('Por favor, lea y acepte la política de tratamiento \
+                        de datos personales para continuar')
 
         elif st.session_state['accepted'] is True:
             st.success('Política de tratamiento de datos personales aceptada. \
@@ -525,7 +500,7 @@ class Authenticate:
             st.session_state['clear'] = not st.session_state['clear']
 
         with st.expander(':page_with_curl: Política de tratamiento de datos \
-                            personales', expanded=expanded):
+                         personales', expanded=expanded):
             self.tratamiento_datos()
 
             st.checkbox('Acepto la política de tratamiento de datos \
@@ -546,24 +521,21 @@ class Authenticate:
                        fields: dict = None,
                        clear_on_submit: bool = False) -> bool:
         """
-        Creates a password reset widget.
+        Crea un widget para restablecer la contraseña.
 
-        Parameters
-        ----------
-        username: str
-            Username of the user to reset the password for.
-        location: str
-            Location of the password reset widget i.e. main or sidebar.
-        fields: dict
-            Rendered names of the fields/buttons.
-        clear_on_submit: bool
-            Clear on submit setting, True: clears inputs on submit, False:
-            keeps inputs on submit.
+        Args:
+        - username (str): Nombre de usuario del usuario para
+            restablecer la contraseña.
+        - location (str): Ubicación del widget de restablecimiento
+            de contraseña,
+                          'main' o 'sidebar'.
+        - fields (dict): Nombres renderizados de los campos/botones.
+        - clear_on_submit (bool): Configuración de limpiar al enviar, True:
+                                  limpia los campos al enviar, False: mantiene
+                                  los campos al enviar.
 
-        Returns
-        -------
-        bool
-            Status of resetting the password.
+        Returns:
+        - bool: Estado del restablecimiento de la contraseña.
         """
         if fields is None:
             fields = {'Form name': 'Restablecer contraseña 🔑',
@@ -628,7 +600,7 @@ class Authenticate:
                                                         new_password_repeat)
             if hash_password:
                 # Actualizar la constraseña en la base de datos
-                self.db.actualizar_contrasena(username, hash_password)               
+                self.db.actualizar_contrasena(username, hash_password)
                 return True
         return None
 
@@ -637,24 +609,21 @@ class Authenticate:
                             fields: dict = None,
                             clear_on_submit: bool = False) -> bool:
         """
-        Creates a update user details widget.
+        Crea un widget para actualizar los detalles del usuario.
 
-        Parameters
-        ----------
-        username: str
-            Username of the user to update user details for.
-        location: str
-            Location of the update user details widget i.e. main or sidebar.
-        fields: dict
-            Rendered names of the fields/buttons.
-        clear_on_submit: bool
-            Clear on submit setting, True: clears inputs on submit, False:
-            keeps inputs on submit.
+        Args:
+        - username (str): Nombre de usuario del usuario para
+            actualizar los detalles.
+        - location (str): Ubicación del widget de actualización de
+            detalles de usuario,
+                          'main' o 'sidebar'.
+        - fields (dict): Nombres renderizados de los campos/botones.
+        - clear_on_submit (bool): Configuración de limpiar al enviar, True:
+                                  limpia los campos al enviar, False: mantiene
+                                  los campos al enviar.
 
-        Returns
-        -------
-        bool
-            Status of updating the user details.
+        Returns:
+        - bool: Estado de la actualización de los detalles del usuario.
         """
         if fields is None:
             fields = {'Form name': 'Actualizar detalles de usuario',
@@ -730,8 +699,14 @@ class Authenticate:
 
     def tratamiento_datos(self):
         """
-        Muestra la política de tratamiento de datos
-        personales desde un archivo Markdown.
+        Muestra la política de tratamiento de datos personales desde un
+        archivo Markdown.
+
+        Args:
+            None
+
+        Returns:
+            None
         """
 
         with open("data/politica_datos.md", "r", encoding="utf-8") as file:

@@ -1,6 +1,5 @@
 """
 Este módulo ejecuta la lógica para generar una clave aleatoria.
-
 """
 
 # Importar las librerías necesarias
@@ -12,26 +11,22 @@ import random
 
 class Helper:
     """
-    This class executes the logic for miscellaneous functions.
+    Esta clase ejecuta la lógica para funciones varias.
     """
+
     def __init__(self):
         pass
 
     @classmethod
     def generate_random_pw(cls, length: int = 16) -> str:
         """
-        Generates a random password.
+        Genera una contraseña aleatoria.
 
-        Parameters
-        ----------
-        length: int
-            The length of the returned password.
-        Returns
-        -------
-        str
-            The randomly generated password.
+        Args:
+            length (int): La longitud de la contraseña generada.
+
+        Returns:
+            str: La contraseña generada aleatoriamente.
         """
         letters = string.ascii_letters + string.digits
-        return ''.join(
-                        random.choice(letters) for i in range(length)
-                        ).replace(' ', '')
+        return ''.join(random.choice(letters) for i in range(length)).replace(' ', '')
