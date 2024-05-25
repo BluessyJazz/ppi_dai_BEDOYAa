@@ -84,6 +84,8 @@ with tab1:
         con tu motocicleta.
         4. **Visualizar Datos:** Visualiza y analiza tus datos de gastos e
         ingresos en gráficos interactivos.
+        5. **Buscar Gasolineras:** Encuentra la gasolinera más cercana a tu
+        ubicación actual.
 
         ## ¿Listo para comenzar? 🚦
 

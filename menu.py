@@ -47,7 +47,7 @@ def authenticated_menu(auth):
 
         # Cambiar contraseña
         auth.reset_password(username)
-        
+
         # Cerrar sesión
         cerrar_sesión = auth.logout()
 
@@ -68,6 +68,7 @@ def unauthenticated_menu():
     # Mostrar las opciones de navegación para los usuarios no autenticados
     st.sidebar.page_link("pages/iniciar_sesion.py", label="Iniciar sesión 🔐")
     st.sidebar.page_link("pages/registro.py", label="Registrarse 📝")
+    st.sidebar.page_link("pages/prueba_rapida.py", label="Prueba rápida 🚀")
     st.sidebar.page_link("pages/gasolinera_mas_cercana.py",
                          label="Gasolinera más cercana 🚗")
 

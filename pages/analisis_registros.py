@@ -29,7 +29,7 @@ from modules.db import ConexionDB
 st.set_page_config(
     page_title="Análisis de Registros · Wily MotoTrack",
     page_icon=":bar_chart:",
-    layout="centered",
+    layout="wide",
     initial_sidebar_state="expanded",
 )
 
@@ -114,6 +114,7 @@ if 'df' in st.session_state and not st.session_state.df.empty:
 
     # Convertir 'Fecha' a datetime y extraer solo la parte de la fecha
     df['Fecha'] = pd.to_datetime(df['Fecha'])
+    df['Monto'] = df['Monto'].astype(float)
 
     # Dataframe con conteo y monto por tipo
     df_tipo = df.groupby('Tipo').agg({'Monto': ['count', 'sum']})
@@ -183,37 +184,143 @@ if 'df' in st.session_state and not st.session_state.df.empty:
     col2.write("### Ingreso Promedio Diario")
     col2.write(f"${ingreso_promedio_diario:,.0f}")
 
-    # Gráficos
-    st.header('Gráficos')
-    df['Monto'] = df['Monto'].astype(int)
-    df['Fecha'] = df['Fecha'].dt.to_pydatetime()
-    df.groupby(df['Fecha'].dt.date)['Monto'].sum().plot(kind='bar')
-    plt.title('Gastos e Ingresos por Fecha')
-    plt.xlabel('Fecha')
-    plt.ylabel('Monto')
+    # df_gastos y df_ingresos
+    df_gastos = df[df['Tipo'] == 'Gasto']
+    df_ingresos = df[df['Tipo'] == 'Ingreso']
 
-    # Mostrar el gráfico
-    st.pyplot(plt)
+    # Gastos e ingresos agrupados por mes
+    df_gastos_mes = df_gastos.groupby(
+                        df_gastos['Fecha'].dt.to_period('M'))['Monto'].sum()
+    df_ingresos_mes = df_ingresos.groupby(
+                        df_ingresos['Fecha'].dt.to_period('M'))['Monto'].sum()
 
-    # Estadísticas
-    st.header('Análisis Estadístico')
-    gastos = df[df['Tipo'] == 'Gasto']['Monto'].values
-    ingresos = df[df['Tipo'] == 'Ingreso']['Monto'].values
-    media_gastos = np.mean(gastos)
-    media_ingresos = np.mean(ingresos)
-    t_stat, p_value = stats.ttest_ind(gastos, ingresos)
-    st.write(f"Media de Gastos: {media_gastos}")
-    st.write(f"Media de Ingresos: {media_ingresos}")
-    st.write(f"T-Statistic: {t_stat}")
-    st.write(f"P-Value: {p_value}")
+    # Convertir los números de los meses a nombres de meses
+    df_gastos_mes.index = df_gastos_mes.index.strftime('%B')
+    df_ingresos_mes.index = df_ingresos_mes.index.strftime('%B')
 
-    # Interpretación
-    st.header('Interpretación de Resultados')
-    if p_value < 0.05:
-        if t_stat > 0:
-            st.write("Los ingresos son significativamente mayores que los gastos. Esto es una buena señal de que tus ingresos superan a tus gastos.")
+    # Dos columnas para gráfico de barras de gastos e ingresos
+    col1, col2 = st.columns(2)
+
+    # Mostrar los resultados
+    with col1:
+        st.header("Gastos por Mes")
+        df_gastos_mes.plot(kind='bar', color='purple')
+        plt.title('Gastos por Mes')
+        plt.xlabel('Mes')
+        plt.ylabel('Monto')
+        st.pyplot(plt)
+        plt.clf()
+
+    with col2:
+        st.header("Ingresos por Mes")
+        df_ingresos_mes.plot(kind='bar', color='purple')
+        plt.title('Ingresos por Mes')
+        plt.xlabel('Mes')
+        plt.ylabel('Monto')
+        st.pyplot(plt)
+        plt.clf()
+
+    # Agrupar los gastos e ingresos por 'Actividad' y sumar los 'Montos'
+    gastos_actividad = df_gastos.groupby('Actividad')['Monto'].sum()
+    ingresos_actividad = df_ingresos.groupby('Actividad')['Monto'].sum()
+
+    # Dos columnas para gráfico de dona de gastos e ingresos según 'Actividad'
+    col1, col2 = st.columns(2)
+
+    # Mostrar los resultados
+    with col1:
+        # Gráfico de dona para los gastos
+        plt.pie(gastos_actividad, labels=gastos_actividad.index, startangle=90, autopct='%1.1f%%')
+        plt.gca().add_artist(plt.Circle((0,0),0.70,fc='white'))
+        plt.title('Gastos por Actividad')
+        st.pyplot(plt)
+        plt.clf()
+
+    with col2:
+        # Gráfico de dona para los ingresos
+        plt.pie(ingresos_actividad, labels=ingresos_actividad.index, startangle=90, autopct='%1.1f%%')
+        plt.gca().add_artist(plt.Circle((0,0),0.70,fc='white'))
+        plt.title('Ingresos por Actividad')
+        st.pyplot(plt)
+        plt.clf()
+
+
+    # Extraer los pares únicos de mes-año
+    meses = df['Fecha'].dt.to_period('M').unique().strftime('%B - %Y')
+
+    # Titulo para filtrar por mes
+    st.header("Análisis Mensual")
+
+    # Widget de selección de mes
+    mes_seleccionado = st.selectbox('Seleccione un mes', meses)
+
+    # Convertir la selección del usuario a un objeto datetime
+    mes_seleccionado = datetime.strptime(mes_seleccionado, '%B - %Y')
+
+    # Filtrar el DataFrame para el mes seleccionado
+    df_mes = df[(df['Fecha'].dt.year == mes_seleccionado.year) & (df['Fecha'].dt.month == mes_seleccionado.month)]
+
+    # Filtrar el DataFrame para los gastos e ingresos del mes seleccionado
+    df_gastos = df_mes[df_mes['Tipo'] == 'Gasto']
+    df_ingresos = df_mes[df_mes['Tipo'] == 'Ingreso']
+
+    # Agrupar los gastos e ingresos por día y sumar los montos
+    df_gastos = df_gastos.groupby(df_gastos['Fecha'].dt.day)['Monto'].sum()
+    df_ingresos = df_ingresos.groupby(
+                                df_ingresos['Fecha'].dt.day)['Monto'].sum()
+
+    # Dos columnas para gasto e ingreso promedio diarios del mes seleccionado
+    col1, col2 = st.columns(2)
+
+    # Mostrar los resultados
+    with col1:
+        # Verificar si hay suficientes datos para calcular el gasto promedio
+        if df_gastos.empty:
+            st.write("### Gasto Promedio")
+            st.warning("No hay suficientes datos para calcular el gasto promedio.")
         else:
-            st.write("Los gastos son significativamente mayores que los ingresos. Deberías revisar tus gastos y buscar maneras de reducirlos.")
-    else:
-        st.write("No hay una diferencia significativa entre los ingresos y los gastos. Tus ingresos y gastos están equilibrados.")
+            # Calcular el gasto promedio diario del mes seleccionado
+            gasto_promedio_diario_mes = df_gastos.mean()
+            st.write("### Gasto Promedio")
+            st.write(f"${gasto_promedio_diario_mes:,.0f}")
 
+    with col2:
+        # Verificar si hay suficientes datos para calcular el ingreso promedio
+        if df_ingresos.empty:
+            st.write("### Ingreso Promedio")
+            st.warning("No hay suficientes datos para calcular el ingreso promedio.")
+        else:
+            # Calcular el ingreso promedio diario del mes seleccionado
+            ingreso_promedio_diario_mes = df_ingresos.mean()
+            st.write("### Ingreso Promedio")
+            st.write(f"${ingreso_promedio_diario_mes:,.0f}")
+
+    # Dos columnas
+    col1, col2 = st.columns(2)
+
+    # Mostrar los resultados
+    with col1:
+        # Verificar si hay suficientes datos para mostrar el gráfico
+        if df_gastos.empty:
+            st.warning("No hay suficientes datos para mostrar el gráfico de gastos.")
+        else:
+            # Crear un gráfico de barras de los gastos por día
+            df_gastos.plot(kind='bar', color='purple')
+            plt.title('Gastos por día')
+            plt.xlabel('Día')
+            plt.ylabel('Monto')
+            st.pyplot(plt)
+            plt.clf()
+
+    with col2:
+        # Verificar si hay suficientes datos para mostrar el gráfico
+        if df_ingresos.empty:
+            st.warning("No hay suficientes datos para mostrar el gráfico de ingresos.")
+        else:
+            # Crear un gráfico de barras de los ingresos por día
+            df_ingresos.plot(kind='bar', color='purple')
+            plt.title('Ingresos por día')
+            plt.xlabel('Día')
+            plt.ylabel('Monto')
+            st.pyplot(plt)
+            plt.clf()

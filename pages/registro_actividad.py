@@ -132,20 +132,6 @@ if "actividad" not in st.session_state:
 if 'hora' not in st.session_state or st.session_state['hora'] is None:
     st.session_state['hora'] = hora
 
-# Combinar la fecha y la hora en un solo objeto datetime
-fecha_hora = datetime.combine(fecha, st.session_state.hora)
-
-# Formatear la fecha
-meses = [
-    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
-    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
-    ]
-
-fecha_formateada = (
-                    f"{fecha_hora.day} de {meses[fecha_hora.month - 1]} "
-                    f"del {fecha_hora.year}"
-)
-
 tipo = st.selectbox("Tipo de actividad", ["Gasto", "Ingreso"],
                     placeholder="Selecciona una opción",
                     index=None, key="tipo")
@@ -163,7 +149,7 @@ if monto:
 fecha_placeholder = st.empty()
 
 # Ahora puedes usar fecha_formateada en tus widgets de Streamlit
-st.write(f"Fecha: {fecha_formateada}")
+fecha_formateada_ph = st.empty()
 
 # Crear un marcador de posición para el widget st.time_input
 hora_placeholder = st.empty()
@@ -175,6 +161,22 @@ descripcion = st.text_area("Descripción", value=None, key="descripcion",
 fecha = fecha_placeholder.date_input("Fecha", fecha, format="DD/MM/YYYY")
 hora_usuario = hora_placeholder.time_input("Hora", st.session_state.hora,
                                            key="hora")
+
+# Combinar la fecha y la hora en un solo objeto datetime
+fecha_hora = datetime.combine(fecha, st.session_state.hora)
+
+# Formatear la fecha
+meses = [
+    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+    ]
+
+fecha_formateada = (
+                    f"{fecha_hora.day} de {meses[fecha_hora.month - 1]} "
+                    f"del {fecha_hora.year}"
+)
+
+fecha_formateada_ph.write(f"Fecha: {fecha_formateada}")
 
 if hora_usuario != st.session_state.hora:
     del st.session_state.hora
