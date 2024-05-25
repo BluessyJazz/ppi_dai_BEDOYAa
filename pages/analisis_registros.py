@@ -12,6 +12,9 @@ de un usuario y calcular las estadísticas de gastos e ingresos.
 import time
 import pandas as pd
 from datetime import datetime
+import numpy as np
+from scipy import stats
+import matplotlib.pyplot as plt
 import streamlit as st
 
 # Importar módulos locales
@@ -62,8 +65,6 @@ user_id = st.session_state.get('user_id')
 # Consultar los registros financieros del usuario
 resultados = db.obtener_registro_financiero(user_id)
 
-st.write(resultados)
-
 if not resultados:
     st.warning("No hay registros financieros para analizar.")
     st.write("Por favor, agrega registros financieros para ver las \
@@ -89,52 +90,130 @@ if 'df' in st.session_state and not st.session_state.df.empty:
     ingresos = df[df["Tipo"] == "Ingreso"]["Monto"].sum()
     balance = ingresos - gastos
 
-    # Mostrar las estadísticas
-    st.write("### Estadísticas")
-    st.write(f"**Gastos:** ${gastos:.2f}")
-    st.write(f"**Ingresos:** ${ingresos:.2f}")
-    st.write(f"**Balance:** ${balance:.2f}")
+    # Tres columnas para mostrar los resultados
+    col1, col2, col3 = st.columns(3)
 
-    # Analisis exahustivo de los registros
-    st.write("### Análisis de Registros")
-    st.write("#### Actividad")
-    st.write(df["Actividad"].value_counts())
-    st.write("#### Tipo")
-    st.write(df["Tipo"].value_counts())
-    st.write("#### Monto")
-    st.write(df["Monto"].describe())
-    st.write("#### Fecha")
-    st.write(df["Fecha"].describe())
-    
-    # Calcular gasto promedio diario
-    df["Fecha"] = pd.to_datetime(df["Fecha"])
-    df["Día"] = df["Fecha"].dt.day_name()
-    df["Mes"] = df["Fecha"].dt.month_name()
-    df["Año"] = df["Fecha"].dt.year
-    gasto_promedio_diario = df[df["Tipo"] == "Gasto"].groupby("Día")["Monto"].mean()
-    st.write("#### Gasto Promedio Diario")
-    st.write(gasto_promedio_diario)
+    # Mostrar los resultados
+    col1.write("### Gastos 💸")
+    col1.write(f"<span style='color:#ff7675'>${gastos:,.0f}</span>",
+               unsafe_allow_html=True)
 
-    # Calcular gasto promedio mensual
-    gasto_promedio_mensual = df[df["Tipo"] == "Gasto"].groupby("Mes")["Monto"].mean()
-    st.write("#### Gasto Promedio Mensual")
-    st.write(gasto_promedio_mensual)
+    col2.write("### Ingresos 💰")
+    col2.write(f"<span style='color:#00b894'>${ingresos:,.0f}</span>",
+               unsafe_allow_html=True)
 
-    # Calcular gasto promedio anual
-    gasto_promedio_anual = df[df["Tipo"] == "Gasto"].groupby("Año")["Monto"].mean()
-    st.write("#### Gasto Promedio Anual")
-    st.write(gasto_promedio_anual)
+    # Mostrar el balance en verde si es positivo y en rojo si es negativo
+    if balance >= 0:
+        col3.write("### Balance 💵")
+        col3.write(f"<span style='color:#00b894'>${balance:,.0f}</span>",
+                   unsafe_allow_html=True)
+    else:
+        col3.write("### Balance 💵")
+        col3.write(f"<span style='color:#ff7675'>-${-balance:,.0f}</span>",
+                   unsafe_allow_html=True)
 
-    # Calcular gasto total por mes
-    gasto_total_mes = df[df["Tipo"] == "Gasto"].groupby("Mes")["Monto"].sum()
-    st.write("#### Gasto Total por Mes")
-    st.write(gasto_total_mes)
-    
-    # Calcular gasto total por año
-    gasto_total_anual = df[df["Tipo"] == "Gasto"].groupby("Año")["Monto"].sum()
-    st.write("#### Gasto Total por Año")
-    st.write(gasto_total_anual)
+    # Convertir 'Fecha' a datetime y extraer solo la parte de la fecha
+    df['Fecha'] = pd.to_datetime(df['Fecha'])
 
-    
+    # Dataframe con conteo y monto por tipo
+    df_tipo = df.groupby('Tipo').agg({'Monto': ['count', 'sum']})
+    df_tipo.columns = ['Cantidad', 'Total']
 
+    # Obtener la fecha actual
+    fecha_actual = datetime.now()
+
+    # Calcular la fecha hace un mes
+    fecha_mes_anterior = fecha_actual - pd.DateOffset(months=1)
+
+    # Filtrar df por el último mes
+    df_ultimo_mes = df[(df['Fecha'] >= fecha_mes_anterior) & (df['Fecha'] < fecha_actual)]
+
+    # Crear df_tipo_mes agrupando por 'Tipo' y calculando el conteo
+    # y la suma de 'Monto'
+    df_tipo_mes = df_ultimo_mes.groupby('Tipo').agg({'Monto': ['count', 'sum']})
+    df_tipo_mes.columns = ['Cantidad', 'Total']
+
+    st.header("Resumen de Tipos de Registros")
+
+    # Dos columnas para mostrar los resultados
+    col1, col2 = st.columns(2)
+
+    # Mostrar los resultados
+    col1.write("### Totales 🌐")
+    col1.write(df_tipo)
+
+    col2.write("### Último mes 📅")
+    col2.write(df_tipo_mes)
+
+    # Dataframe con conteo y monto por actividad
+    df_actividad_ingreso = df[df["Tipo"] == "Ingreso"].groupby('Actividad').agg({'Monto': ['count', 'sum']})
+    df_actividad_ingreso.columns = ['Cantidad', 'Total']
+    df_actividad_ingreso = df_actividad_ingreso.sort_values(by='Total', ascending=False)
+
+    df_actividad_gasto = df[df["Tipo"] == "Gasto"].groupby('Actividad').agg({'Monto': ['count', 'sum']})
+    df_actividad_gasto.columns = ['Cantidad', 'Total']
+    df_actividad_gasto = df_actividad_gasto.sort_values(by='Total', ascending=False)
+
+    st.header("Resumen de Actividades")
+
+    col1, col2 = st.columns(2)
+
+    col1.write("### Ingresos 💰")
+    col1.write(df_actividad_ingreso)
+
+    col2.write("### Gastos 💸")
+    col2.write(df_actividad_gasto)
+
+    # Calcular el número total de días en el rango de fechas
+    total_dias = (df["Fecha"].max() - df["Fecha"].min()).days
+
+    # Calcular el gasto promedio diario
+    gasto_promedio_diario = gastos / total_dias
+
+    # Calcular el ingreso promedio diario
+    ingreso_promedio_diario = ingresos / total_dias
+
+    # Dos columnas para mostrar los resultados
+    col1, col2 = st.columns(2)
+
+    # Mostrar los resultados
+    col1.write("### Gasto Promedio Diario")
+    col1.write(f"${gasto_promedio_diario:,.0f}")
+
+    col2.write("### Ingreso Promedio Diario")
+    col2.write(f"${ingreso_promedio_diario:,.0f}")
+
+    # Gráficos
+    st.header('Gráficos')
+    df['Monto'] = df['Monto'].astype(int)
+    df['Fecha'] = df['Fecha'].dt.to_pydatetime()
+    df.groupby(df['Fecha'].dt.date)['Monto'].sum().plot(kind='bar')
+    plt.title('Gastos e Ingresos por Fecha')
+    plt.xlabel('Fecha')
+    plt.ylabel('Monto')
+
+    # Mostrar el gráfico
+    st.pyplot(plt)
+
+    # Estadísticas
+    st.header('Análisis Estadístico')
+    gastos = df[df['Tipo'] == 'Gasto']['Monto'].values
+    ingresos = df[df['Tipo'] == 'Ingreso']['Monto'].values
+    media_gastos = np.mean(gastos)
+    media_ingresos = np.mean(ingresos)
+    t_stat, p_value = stats.ttest_ind(gastos, ingresos)
+    st.write(f"Media de Gastos: {media_gastos}")
+    st.write(f"Media de Ingresos: {media_ingresos}")
+    st.write(f"T-Statistic: {t_stat}")
+    st.write(f"P-Value: {p_value}")
+
+    # Interpretación
+    st.header('Interpretación de Resultados')
+    if p_value < 0.05:
+        if t_stat > 0:
+            st.write("Los ingresos son significativamente mayores que los gastos. Esto es una buena señal de que tus ingresos superan a tus gastos.")
+        else:
+            st.write("Los gastos son significativamente mayores que los ingresos. Deberías revisar tus gastos y buscar maneras de reducirlos.")
+    else:
+        st.write("No hay una diferencia significativa entre los ingresos y los gastos. Tus ingresos y gastos están equilibrados.")
 
