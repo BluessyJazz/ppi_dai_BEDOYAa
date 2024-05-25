@@ -1,13 +1,33 @@
+"""
+Este script contiene la aplicación de Streamlit para encontrar la gasolinera
+más cercana a una ubicación dada. La aplicación utiliza la API de Places de
+Google para buscar gasolineras cercanas y muestra la gasolinera más cercana
+en un mapa interactivo.
+"""
+
+# Importar librerías
+# -requests: para hacer solicitudes HTTP
+# -folium: para crear mapas interactivos
+# -numpy: para operaciones numéricas
+# -pandas: para manipulación de datos
+# -geopandas: para trabajar con datos geoespaciales
+# -streamlit: para crear aplicaciones web
+# -streamlit_folium: para mostrar mapas de Folium en Streamlit
+# -distance_matrix: para calcular la matriz de distancias
+# -get_geolocation: para obtener la ubicación del usuario
 import requests
-import streamlit as st
-import pandas as pd
-from streamlit_js_eval import get_geolocation
-import geopandas as gpd
 import folium
 import numpy as np
-from scipy.spatial import distance_matrix
+import pandas as pd
+import geopandas as gpd
+import streamlit as st
 import streamlit_folium as st_folium
+from scipy.spatial import distance_matrix
+from streamlit_js_eval import get_geolocation
 
+# Importar funciones y clases personalizadas
+# -menu: para mostrar el menú de navegación
+# -init_auth: para inicializar la autenticación
 from menu import menu
 from modules.auth import init_auth
 
@@ -42,7 +62,8 @@ else:
 API_KEY = st.secrets["google_api_key"]
 
 
-# Función para buscar gasolineras usando la API de Places de Google (Nearby Search)
+# Función para buscar gasolineras usando la API de Places de
+# Google (Nearby Search)
 def fetch_gas_stations(location, radius=5000):
     url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={location}&radius={radius}&type=gas_station&key={API_KEY}"
     response = requests.get(url)
@@ -62,7 +83,7 @@ def fetch_gas_stations(location, radius=5000):
 
 st.title("Gasolineras cerca de una ubicación")
 
-st.write(f"Presiona el botón para usar tu ubicación:")
+st.write("Presiona el botón para usar tu ubicación:")
 
 location = None
 
@@ -162,7 +183,7 @@ if location:
         puntuacion = punto_mas_cercano['rating']
         calificaciones = punto_mas_cercano['user_ratings_total']
         punto_mas_cercano = f"{nombre}\nDirección: {direccion}\nPuntuación: \
-                              {puntuacion}\n# de calificaciones: \
+                              {puntuacion}\nnúmero de calificaciones: \
                               {calificaciones}"
 
         st.write(punto_mas_cercano)
