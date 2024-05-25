@@ -48,6 +48,46 @@ st.write("Aquí podrás probar la aplicación sin necesidad de registrarte. \
           Para guardar tus datos, y ver gráficos detallados \
           regístrate en la aplicación.")
 
+# Crear un DataFrame de prueba con registros de ejemplo
+data = {
+    "actividad": [
+        "Compra de gasolina", "Mantenimiento", "Servicio de transporte", 
+        "Reparación de frenos", "Compra de aceite", "Ganancia de entrega",
+        "Compra de llantas", "Cambio de filtro", "Ganancia por taxi moto",
+        "Compra de accesorios"
+    ],
+    "tipo": [
+        "Gasto", "Gasto", "Ingreso", "Gasto", "Gasto", "Ingreso", 
+        "Gasto", "Gasto", "Ingreso", "Gasto"
+    ],
+    "monto": [
+        25000, 45000, 60000, 30000, 15000, 40000, 80000, 20000, 35000, 5000
+    ],
+    "descripcion": [
+        "2 Galones de gasolina", "Cambio de aceite y filtro", 
+        "Servicio de transporte urbano", "Reparación completa de frenos",
+        "Aceite para motor", "Entrega de paquete", "Compra de llantas nuevas",
+        "Cambio de filtro de aire", "Transporte de personas", "Accesorios varios"
+    ],
+    "fecha_hora": [
+        "2024-05-18 00:00:00", "2024-05-18 01:00:00", "2024-05-18 10:00:00",
+        "2024-05-19 14:00:00", "2024-05-19 15:00:00", "2024-05-20 08:00:00",
+        "2024-05-20 09:00:00", "2024-05-20 10:00:00", "2024-05-21 12:00:00",
+        "2024-05-22 14:00:00"
+    ],
+    "user_id": [
+        "test_user", "test_user", "test_user", "test_user", "test_user", 
+        "test_user", "test_user", "test_user", "test_user", "test_user"
+    ]
+}
+
+df = pd.DataFrame(data)
+df["fecha_hora"] = pd.to_datetime(df["fecha_hora"])
+
+# Precargar el DataFrame en st.session_state
+if "financial_records" not in st.session_state:
+    st.session_state.financial_records = df
+
 # Pestañas de la página
 tab1, tab2, tab3 = st.tabs(
                 ["Registrar actividad", "Ver actividades", "Ver análisis"])
